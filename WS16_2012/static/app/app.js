@@ -11,6 +11,10 @@
                     templateUrl: 'static/partials/login.html',
                     controller: 'LoginCtrl'
                 })
+                .when('/register', {
+                    templateUrl: 'static/partials/register.html',
+                    controller: 'RegisterCtrl'
+                })
                 .otherwise('/login');
             $locationProvider.html5Mode(true);
         })
