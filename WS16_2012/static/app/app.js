@@ -15,6 +15,10 @@
                     templateUrl: 'static/partials/register.html',
                     controller: 'RegisterCtrl'
                 })
+                .when('/logout', {
+                    template: '',
+                    controller: 'LogoutCtrl'
+                })
                 .when('/dashboard', {
                     templateUrl: 'static/partials/dashboard.html',
                     controller: 'DashboardCtrl'

@@ -6,7 +6,7 @@
     "use strict";
 
     angular.module('app.RegisterCtrl', [])
-        .controller('RegisterCtrl', function ($scope, $location, Auth) {
+        .controller('RegisterCtrl', function ($scope, $location, Auth, USERNAME_REGEX) {
             var init = function () {
                 $scope.username = "";
                 $scope.password = "";
@@ -20,6 +20,8 @@
             $scope.register = function () {
                 if (!$scope.username) {
                     $scope.alertMessage = 'Username cannot be empty.';
+                } else if (!USERNAME_REGEX.test($scope.username)) {
+                    $scope.alertMessage = 'Username can contain only alphanumerical characters.';
                 } else if (!$scope.password) {
                     $scope.alertMessage = 'Password cannot be empty.';
                 } else if ($scope.password !== $scope.renteredPassword) {

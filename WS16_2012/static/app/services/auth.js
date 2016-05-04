@@ -28,6 +28,12 @@
                         }
                     });
                 },
+                logout: function () {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/logout'
+                    });
+                },
                 hasStoredCredentials: function () {
                     return $rootScope.display === 'user' || $rootScope.display === 'admin';
                 }

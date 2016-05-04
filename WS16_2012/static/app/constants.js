@@ -45,5 +45,6 @@
                 name: "Done",
                 description: "Implementacija i verifikacija su uspešno završene"
             }
-        ]);
+        ])
+        .constant('USERNAME_REGEX', /^[A-Za-z0-9]+$/);
 }(angular));
