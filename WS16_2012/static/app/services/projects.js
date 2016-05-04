@@ -29,11 +29,25 @@
                         url: 'api/projects/' + id
                     });
                 },
-                create: function () {
-
+                create: function (name, description) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects',
+                        data: {
+                            name: name,
+                            description: description
+                        }
+                    });
                 },
-                update: function () {
-
+                update: function (id, name, description) {
+                    return $http({
+                        method: 'PUT',
+                        url: 'api/projects/' + id,
+                        data: {
+                            name: name,
+                            description: description
+                        }
+                    });
                 }
             };
         });
