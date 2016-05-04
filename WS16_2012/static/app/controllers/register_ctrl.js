@@ -5,24 +5,25 @@
 (function (angular) {
     "use strict";
 
-    angular.module('app.LoginCtrl', [])
-        .controller('LoginCtrl', function ($rootScope, $scope, $location, Auth) {
-
+    angular.module('app.RegisterCtrl', [])
+        .controller('RegisterCtrl', function ($scope, $location, Auth) {
             var init = function () {
                 $scope.username = "";
                 $scope.password = "";
+                $scope.renteredPassword = "";
                 $scope.alertMessage = null;
-
                 if (Auth.hasStoredCredentials()) {
                     $location.path("/dashboard");
                 }
             };
 
-            $scope.login = function () {
+            $scope.register = function () {
                 if (!$scope.username) {
                     $scope.alertMessage = 'Username cannot be empty.';
                 } else if (!$scope.password) {
                     $scope.alertMessage = 'Password cannot be empty.';
+                } else if ($scope.password !== $scope.renteredPassword) {
+                    $scope.alertMessage = 'Passwords do not match.';
                 } else {
                     $scope.alertMessage = null;
                 }
@@ -31,20 +32,15 @@
                     return;
                 }
 
-                Auth.login($scope.username, $scope.password).then(
-                    function (response) {
-                        $rootScope.display = response.data.role;
+                Auth.register($scope.username, $scope.password).then(
+                    function () {
                         $scope.alertMessage = null;
-                        $location.path('/dashboard');
+                        $location.path('/login');
                     },
                     function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
+                        $scope.alertMessage = "Error: " + response.message;
                     }
                 );
-            };
-
-            $scope.register = function () {
-                $location.path('/register');
             };
 
             init();

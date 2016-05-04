@@ -11,7 +11,15 @@
                     templateUrl: 'static/partials/login.html',
                     controller: 'LoginCtrl'
                 })
-                .otherwise('/login');
+                .when('/register', {
+                    templateUrl: 'static/partials/register.html',
+                    controller: 'RegisterCtrl'
+                })
+                .when('/dashboard', {
+                    templateUrl: 'static/partials/dashboard.html',
+                    controller: 'DashboardCtrl'
+                })
+                .otherwise('/');
             $locationProvider.html5Mode(true);
         })
         .run(function ($rootScope) {
