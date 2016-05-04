@@ -14,7 +14,7 @@
                 $scope.alertMessage = null;
 
                 if (Auth.hasStoredCredentials()) {
-                    $location.path("/home");
+                    $location.path("/dashboard");
                 }
             };
 
@@ -35,7 +35,7 @@
                     function (response) {
                         $rootScope.display = response.data.role;
                         $scope.alertMessage = null;
-                        $location.path('/home');
+                        $location.path('/dashboard');
                     },
                     function (response) {
                         $scope.alertMessage = "Error: " + response.data.message;

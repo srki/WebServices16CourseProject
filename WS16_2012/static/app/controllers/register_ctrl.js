@@ -13,7 +13,7 @@
                 $scope.renteredPassword = "";
                 $scope.alertMessage = null;
                 if (Auth.hasStoredCredentials()) {
-                    $location.path("/home");
+                    $location.path("/dashboard");
                 }
             };
 
@@ -41,10 +41,6 @@
                         $scope.alertMessage = "Error: " + response.message;
                     }
                 );
-            };
-
-            $scope.backToLogin = function () {
-                $location.path('/login');
             };
 
             init();
