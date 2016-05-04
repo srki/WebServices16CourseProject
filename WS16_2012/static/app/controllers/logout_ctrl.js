@@ -5,8 +5,8 @@
 (function (angular) {
     "use strict";
 
-    angular.module('app.Login', [])
-        .controller('Login', function ($rootScope, Auth, $location) {
+    angular.module('app.LogoutCtrl', [])
+        .controller('LogoutCtrl', function ($rootScope, Auth, $location) {
             Auth.logout().then(
                 function () {
                     $rootScope.display = 'login';

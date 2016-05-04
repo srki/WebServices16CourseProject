@@ -1,10 +1,9 @@
 import json
-
-from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.views.generic import View
 
 
 class LoginView(View):
@@ -27,6 +26,7 @@ class LoginView(View):
 class LogoutView(View):
     def post(self, request):
         logout(request)
+        return JsonResponse({}, status=200)
 
 
 class RegisterView(View):
@@ -37,7 +37,7 @@ class RegisterView(View):
 
             return JsonResponse({'message': 'An user with that username already exists!'}, status=400)
         except ObjectDoesNotExist:
-            u = User.objects.create_user(username=['username'], password=credentials['password'])
+            u = User.objects.create_user(username=credentials['username'], password=credentials['password'])
             u.save()
 
             return JsonResponse({}, status=200)
