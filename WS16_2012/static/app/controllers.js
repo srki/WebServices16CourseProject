@@ -1,5 +1,7 @@
 /*global angular*/
 angular.module('app.controllers', [
     'app.LoginCtrl',
-    'app.RegisterCtrl'
+    'app.RegisterCtrl',
+    'app.LogoutCtrl',
+    'app.DashboardCtrl'
 ]);

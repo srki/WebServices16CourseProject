@@ -40,7 +40,7 @@
                         $location.path('/login');
                     },
                     function (response) {
-                        $scope.alertMessage = "Error: " + response.message;
+                        $scope.alertMessage = "Error: " + response.data.message;
                     }
                 );
             };
