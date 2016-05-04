@@ -21,8 +21,8 @@ from WS16_2012.views.login import LoginView, RegisterView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/login/$', LoginView.as_view()),
-    url(r'^api/register/', RegisterView.as_view()),
+    url(r'^api/login', LoginView.as_view()),
+    url(r'^api/register', RegisterView.as_view()),
     url(r'^', TemplateView.as_view(template_name="index.html"))
 ]
 

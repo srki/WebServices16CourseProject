@@ -11,6 +11,7 @@ ct = ContentType.objects.get(app_label="auth", model="permission")
 permission = Permission(name='Is Admin', codename='admin', content_type=ct)
 permission.save()
 
+permission = Permission.objects.get(name='Is Admin')
 u2.user_permissions.add(permission)
 
 u2.save()

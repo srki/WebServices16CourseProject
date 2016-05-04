@@ -1,3 +1,5 @@
+import json
+
 from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
@@ -6,15 +8,14 @@ from django.http import JsonResponse
 class LoginView(View):
     def post(self, request):
 
-        username = request.POST['username']
-        password = request.POST['password']
+        credentials = json.loads(request.body)
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=credentials['username'], password=credentials['password'])
 
         if user is not None:
             login(request, user)
 
-            role = 'admin' if user.has_perm('ws16_2012.admin') else 'user'
+            role = 'admin' if user.has_perm('auth.admin') else 'user'
             return JsonResponse({'role': role}, status=200)
 
         else:
