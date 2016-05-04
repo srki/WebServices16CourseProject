@@ -1,18 +1,15 @@
-import json
-
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from WS16_2012.views.views import RestView
 
 
-class LoginView(View):
-    def post(self, request):
+class LoginView(RestView):
+    def rest_post(self, request, json_values):
 
-        credentials = json.loads(request.body)
-
-        user = authenticate(username=credentials['username'], password=credentials['password'])
+        user = authenticate(username=json_values['username'], password=json_values['password'])
 
         if user is not None:
             login(request, user)
@@ -29,17 +26,14 @@ class LogoutView(View):
         logout(request)
 
 
-class RegisterView(View):
-    def post(self, request):
+class RegisterView(RestView):
+    def rest_post(self, request, json_values):
         try:
-            credentials = json.loads(request.body)
-            User.objects.get(username=credentials['username'])
+            User.objects.get(username=json_values['username'])
 
             return JsonResponse({'message': 'An user with that username already exists!'}, status=400)
         except ObjectDoesNotExist:
-            u = User.objects.create_user(username=['username'], password=credentials['password'])
+            u = User.objects.create_user(username=json_values['username'], password=json_values['password'])
             u.save()
 
             return JsonResponse({}, status=200)
-        except ValueError:
-            return JsonResponse({'message': 'Invalid JSON!'}, status=400)
