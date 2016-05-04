@@ -1,3 +1,5 @@
+import re
+
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -29,6 +31,9 @@ class LogoutView(View):
 class RegisterView(RestView):
     def rest_post(self, request, json_values):
         try:
+            if not re.match('^[A-Za-z0-9]+$', json_values['username']):
+                return JsonResponse({'message': 'Invalid username!'}, status=400)
+
             User.objects.get(username=json_values['username'])
 
             return JsonResponse({'message': 'An user with that username already exists!'}, status=400)
