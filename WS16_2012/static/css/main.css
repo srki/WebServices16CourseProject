@@ -1,0 +1,19 @@
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+body {
+    background-color: #E9E9E9;
+}
+
+#Register, #Login {
+    width: 500px;
+    margin: 50px auto 75px auto;
+    background-color: #F7F7F7;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 5px #AFAFAF;
+}
+
+#RegisterButton, #LoginButton, #BackButton {
+    width: 370px;
+}

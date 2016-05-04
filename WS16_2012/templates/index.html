@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <title>Ticketing System</title>
+    <base href="/"/>
+
+    <!-- <css> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/util.css">
+
+    <!-- <libraries> -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- <angular> -->
+    <script type="application/javascript" src="static/app/app.js"></script>
+    <script type="application/javascript" src="static/app/controllers.js"></script>
+    <script type="application/javascript" src="static/app/services.js"></script>
+    <script type="application/javascript" src="static/app/directives.js"></script>
+    <script type="application/javascript" src="static/app/constants.js"></script>
+
+    <!-- <controllers> -->
+    <script type="application/javascript" src="static/app/controllers/login_ctrl.js"></script>
+
+    <!-- <services> -->
+    <script type="application/javascript" src="static/app/services/auth.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+        <ng-view></ng-view>
+	</div>
+</body>
+</html>
