@@ -6,6 +6,11 @@ body {
     background-color: #E9E9E9;
 }
 
+#Content {
+    background-color: #FFFFFF;
+    min-height: 100%;
+}
+
 #Register, #Login {
     width: 500px;
     margin: 50px auto 75px auto;

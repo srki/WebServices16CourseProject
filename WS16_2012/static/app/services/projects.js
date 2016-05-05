@@ -9,7 +9,7 @@
         .factory('Projects', function ($http) {
             return {
                 getAll: function (page, perPage) {
-                    page = page || 0;
+                    page = page || 1;
                     perPage = perPage || 10;
 
                     return $http({
