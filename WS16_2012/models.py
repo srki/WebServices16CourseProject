@@ -24,7 +24,7 @@ class Comment(models.Model):
     text = models.CharField(max_length=2000)
     date = models.DateTimeField()
 
-    task = models.ForeignKey(Task)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     created = models.ForeignKey(User)
 
 
@@ -37,4 +37,4 @@ class TaskRevision(models.Model):
 
     assigned = models.ForeignKey(User, null=True)
 
-    task = models.ForeignKey(Task)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)

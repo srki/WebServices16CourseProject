@@ -156,10 +156,10 @@ class ProjectTaskView(View):
 
             values = json.loads(request.body)
 
-            if values['status'].upper not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
+            if values['status'].upper() not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
                 raise ValueError
 
-            if values['priority'].upper not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
+            if values['priority'].upper() not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
                 raise ValueError
 
             t.name = values['name']
@@ -174,4 +174,16 @@ class ProjectTaskView(View):
             return JsonResponse({}, status=200)
 
         except Exception as e:
+            return JsonResponse({'message': 'Bad request'}, status=400)
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def delete(self, request, project_id, task_id):
+
+        try:
+            project = Project.objects.get(id=project_id)
+            task = project.task_set.get(id=task_id)
+
+            task.delete()
+            return JsonResponse({}, status=200)
+        except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
