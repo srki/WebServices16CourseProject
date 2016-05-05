@@ -34,8 +34,17 @@
                         url: 'api/logout'
                     });
                 },
+                isLogged: function () {
+                    return $http({
+                        method: 'GET',
+                        url: 'api/login'
+                    });
+                },
                 hasStoredCredentials: function () {
                     return $rootScope.display === 'user' || $rootScope.display === 'admin';
+                },
+                storeCredentials: function (display) {
+                    $rootScope.display = display;
                 }
             };
         });

@@ -6,8 +6,17 @@
     "use strict";
 
     angular.module('app.ProjectCtrl', [])
-        .controller('ProjectCtrl', function ($scope, $routeParams, Projects) {
+        .controller('ProjectCtrl', function ($scope, $routeParams, $location, Auth, Projects) {
             var init = function () {
+                Auth.isLogged().then(
+                    function (response) {
+                        Auth.storeCredentials(response.data.role);
+                    },
+                    function () {
+                        $location.path("/login");
+                    }
+                );
+
                 $scope.projectId = $routeParams.id;
                 $scope.project = {};
                 $scope.name = "";
@@ -23,7 +32,6 @@
                         $scope.alertMessage = "Error: " + response.data.message;
                     }
                 );
-
             };
 
             $scope.update = function () {

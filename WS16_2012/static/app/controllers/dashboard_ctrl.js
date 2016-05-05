@@ -8,9 +8,14 @@
     angular.module('app.DashboardCtrl', [])
         .controller('DashboardCtrl', function ($scope, $location, Auth) {
             var init = function () {
-                if (!Auth.hasStoredCredentials()) {
-                    $location.path("/login");
-                }
+                Auth.isLogged().then(
+                    function (response) {
+                        Auth.storeCredentials(response.data.role);
+                    },
+                    function () {
+                        $location.path("/login");
+                    }
+                );
             };
 
             init();
