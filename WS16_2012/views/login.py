@@ -34,7 +34,11 @@ class LoginView(RestView):
 
 class LogoutView(View):
     def post(self, request):
-        logout(request)
+        if request.user.is_authenticated():
+            logout(request)
+            return JsonResponse({}, status=200)
+
+        return JsonResponse({}, status=400)
 
 
 class RegisterView(RestView):

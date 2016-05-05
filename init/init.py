@@ -27,6 +27,11 @@ u2.user_permissions.add(p2)
 
 u2.save()
 
+for i in range(ord('a'), ord('z')+1):
+    u = User.objects.create_user("user" + chr(i), password=chr(i))
+    u.user_permissions.add(p1)
+    u.save()
+
 # PROJECTS
 
 p1 = Project(name='Vizlore 1', description='Vidj sto je lep nas ios projekat')
