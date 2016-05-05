@@ -52,7 +52,12 @@ class TasksView(RestView):
             paginator = Paginator(tasks, per_page)
             tasks = paginator.page(page)
 
-        data = [model_to_dict(instance) for instance in tasks]
+        data = []
+        for instance in tasks:
+            t = model_to_dict(instance)
+            t['project'] = model_to_dict(instance.project, fields=['id', 'name'])
+            data.append(t)
+
         return JsonResponse({'tasks': data, 'count': count}, status=200)
 
 
@@ -79,6 +84,15 @@ class ProjectTasksView(View):
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
+    def post(self, request, identifier):
+        try:
+            project = Project.objects.get(id=identifier)
+
+
+
+        except Exception:
+            return JsonResponse({'message': 'Bad request'}, status=400)
+
 
 class ProjectTaskView(View):
 
@@ -87,18 +101,9 @@ class ProjectTaskView(View):
 
         try:
             project = Project.objects.get(id=project_id)
-            tasks = project.task_set.get(id=task_id)
+            task = project.task_set.get(id=task_id)
 
-            count = tasks.count()
-
-            if 'per_page' in request.GET and 'page' in request.GET:
-                per_page = request.GET['per_page']
-                page = request.GET['page']
-
-                paginator = Paginator(tasks, per_page)
-                tasks = paginator.page(page)
-
-            data = [model_to_dict(instance) for instance in tasks]
-            return JsonResponse({'tasks': data, 'count': count}, status=200)
+            data = model_to_dict(task)
+            return JsonResponse(data, status=200)
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
