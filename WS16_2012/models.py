@@ -35,5 +35,6 @@ class TaskRevision(models.Model):
     description = models.CharField(max_length=2000)
     date = models.DateTimeField()
 
-    project = models.ForeignKey(Project)
-    assigned = models.ForeignKey(User)
+    assigned = models.ForeignKey(User, null=True)
+
+    task = models.ForeignKey(Task)

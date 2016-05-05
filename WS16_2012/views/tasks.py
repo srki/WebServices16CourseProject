@@ -1,5 +1,7 @@
 import json
 
+from datetime import datetime
+
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 
@@ -7,10 +9,12 @@ from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
 from WS16_2012.views.views import RestView, View
-from WS16_2012.models import Task, Project
+from WS16_2012.models import Task, TaskRevision, Project
 
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
+
+from django.db import transaction
 
 
 class TasksView(RestView):
@@ -94,6 +98,12 @@ class ProjectTasksView(View):
             task_count = project.task_set.all().count()
             values = json.loads(request.body)
 
+            if values['status'] not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
+                raise ValueError
+
+            if values['priority'] not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
+                raise ValueError
+
             task = Task(name=project.name + '-' + str(task_count),
                         status=values['status'],
                         priority=values['priority'],
@@ -125,4 +135,43 @@ class ProjectTaskView(View):
             data = model_to_dict(task)
             return JsonResponse(data, status=200)
         except Exception:
+            return JsonResponse({'message': 'Bad request'}, status=400)
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    @method_decorator(transaction.atomic)
+    def put(self, request, project_id, task_id):
+
+        try:
+            p = Project.objects.get(id=project_id)
+            t = p.task_set.get(id=task_id)
+
+            tr = TaskRevision(name=t.name,
+                              status=t.status,
+                              priority=t.priority,
+                              description=t.description,
+                              date=datetime.now(),
+                              assigned=t.assigned,
+                              task=t)
+            tr.save()
+
+            values = json.loads(request.body)
+
+            if values['status'] not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
+                raise ValueError
+
+            if values['priority'] not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
+                raise ValueError
+
+            t.name = values['name']
+            t.status = values['status']
+            t.priority = values['priority']
+            t.description = values['description']
+
+            t.assigned = User.objects.get(id=values['assigned'])
+
+            t.save()
+
+            return JsonResponse({}, status=200)
+
+        except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
