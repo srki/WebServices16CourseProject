@@ -9,6 +9,15 @@ from WS16_2012.views.views import RestView
 
 
 class LoginView(RestView):
+
+    def rest_get(self, request):
+
+        if request.user.is_authenticated():
+            role = 'admin' if request.user.has_perm('auth.admin') else 'user'
+            return JsonResponse({'role': role}, status=200)
+
+        return JsonResponse({}, status=403)
+
     def rest_post(self, request, json_values):
 
         user = authenticate(username=json_values['username'], password=json_values['password'])
