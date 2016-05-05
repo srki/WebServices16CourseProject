@@ -18,6 +18,8 @@ class RestView(View):
 
         except ValueError:
             return JsonResponse({'message': 'Invalid JSON!'}, status=400)
+        except Exception:
+            return JsonResponse({'message': 'Bad request'}, status=400)
 
     def rest_get(self, request):
         pass
