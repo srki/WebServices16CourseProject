@@ -17,7 +17,7 @@ class Task(models.Model):
 
     project = models.ForeignKey(Project)
     created = models.ForeignKey(User, related_name='created')
-    assigned = models.ForeignKey(User, related_name='assigned')
+    assigned = models.ForeignKey(User, related_name='assigned', null=True)
 
 
 class Comment(models.Model):

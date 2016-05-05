@@ -98,10 +98,10 @@ class ProjectTasksView(View):
             task_count = project.task_set.all().count()
             values = json.loads(request.body)
 
-            if values['status'] not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
+            if values['status'].upper() not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
                 raise ValueError
 
-            if values['priority'] not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
+            if values['priority'].upper() not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
                 raise ValueError
 
             task = Task(name=project.name + '-' + str(task_count),
@@ -119,7 +119,7 @@ class ProjectTasksView(View):
 
             return JsonResponse({}, status=200)
 
-        except Exception:
+        except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
 
@@ -156,10 +156,10 @@ class ProjectTaskView(View):
 
             values = json.loads(request.body)
 
-            if values['status'] not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
+            if values['status'].upper not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
                 raise ValueError
 
-            if values['priority'] not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
+            if values['priority'].upper not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
                 raise ValueError
 
             t.name = values['name']
