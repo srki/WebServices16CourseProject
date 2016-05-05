@@ -187,3 +187,26 @@ class ProjectTaskView(View):
             return JsonResponse({}, status=200)
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
+
+
+class ProjectTaskHistoryView(View):
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def get(self, request, project_id, task_id):
+
+        try:
+            project = Project.objects.get(id=project_id)
+            task = project.task_set.get(id=task_id)
+            history = task.taskrevision_set.all().order_by('date')
+
+            if 'per_page' in request.GET and 'page' in request.GET:
+                per_page = request.GET['per_page']
+                page = request.GET['page']
+
+                paginator = Paginator(history, per_page)
+                history = paginator.page(page)
+
+            data = [model_to_dict(instance) for instance in history]
+            return JsonResponse(data, status=200, safe=False)
+        except Exception as e:
+            return JsonResponse({'message': 'Bad request'}, status=400)
