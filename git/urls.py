@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^api/login', LoginView.as_view()),
     url(r'^api/register', RegisterView.as_view()),
     url(r'^api/logout', LogoutView.as_view()),
-    url(r'^api/projects/(?P<id>\d+)', ProjectView.as_view()),
+    url(r'^api/projects/(?P<identifier>\d+)', ProjectView.as_view()),
     url(r'^api/projects', ProjectsView.as_view()),
     url(r'^', TemplateView.as_view(template_name="index.html"))
 ]

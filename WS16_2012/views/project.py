@@ -54,6 +54,9 @@ class ProjectsView(RestView):
 class ProjectView(View):
 
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
-    def get(self, request, id):
-        #p = login
-        return JsonResponse("", status=200)
+    def get(self, request, identifier):
+        project = Project.objects.get(id=int(identifier))
+        if project:
+            return JsonResponse(model_to_dict(project, exclude=['participants']), status=200)
+        else:
+            return JsonResponse({'message': 'Not found'}, status=404)
