@@ -13,7 +13,7 @@
                         Auth.storeCredentials(response.data.role);
                     },
                     function () {
-                        $location.path("/login");
+                        $location.path('/login');
                     }
                 );
 
@@ -31,7 +31,7 @@
                         $scope.alertMessage = null;
                     },
                     function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
+                        $scope.alertMessage = 'Error: ' + response.data.message;
                     }
                 );
             };
@@ -49,7 +49,7 @@
             };
 
             $scope.open = function (id) {
-                $location.path("/projects/" + id);
+                $location.path('/projects/' + id);
             };
 
             init();

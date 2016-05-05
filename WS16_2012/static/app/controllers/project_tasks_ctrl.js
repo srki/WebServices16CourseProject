@@ -6,9 +6,42 @@
     "use strict";
 
     angular.module('app.ProjectTasksCtrl', [])
-        .controller('ProjectTasksCtrl', function ($scope) {
+        .controller('ProjectTasksCtrl', function ($scope, $location, $uibModal, Projects) {
             var init = function () {
+                $scope.tasks = [];
+                $scope.count = 0;
+                $scope.currentPage = 1;
 
+                $scope.loadTasks();
+            };
+
+            $scope.loadTasks = function () {
+                Projects.getAllTasks($scope.projectId, $scope.currentPage).then(
+                    function (response) {
+                        $scope.tasks = response.data.tasks;
+                        $scope.count = response.data.count;
+                        $scope.alertMessage = null;
+                    },
+                    function (response) {
+                        $scope.alertMessage = 'Error: ' + response.data.message;
+                    }
+                );
+            };
+
+            $scope.create = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'static/partials/task_modal.html',
+                    controller: 'TaskModalCtrl'
+                }).result.then(function (refresh) {
+                    if (refresh) {
+                        $scope.loadPage();
+                    }
+                });
+            };
+
+            $scope.open = function (id) {
+                $location.path('/projects/' + $scope.projectId + '/tasks/' + id);
             };
 
             init();

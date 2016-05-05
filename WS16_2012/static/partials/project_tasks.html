@@ -1,35 +1,22 @@
-<div id="Dashboard" class="plr-50 ptb-20">
-    <h2>Your tasks</h2>
-    <uib-alert type="danger" ng-if="alertMessage">{{ alertMessage }}</uib-alert>
-
-    <div class="row bm-20">
-        <div class="col-md-6">
-            <oi-select oi-options="priority for priority in priorities track by priority" ng-model="selectedPriorities"
-                       multiple multiple-placeholder="Select priorities" placeholder="Select priorities"></oi-select>
-        </div>
-        <div class="col-md-6">
-            <oi-select oi-options="status for status in statuses track by status" ng-model="selectedStatuses"
-                       multiple multiple-placeholder="Select statuses" placeholder="Select statuses"></oi-select>
-        </div>
-    </div>
+<div ng-controller="ProjectTasksCtrl">
+    <h3>Project tasks</h3>
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <table class="table table-striped table-hover table-bordered">
         <tr>
-            <th class="table-cell-align header-lg">Project</th>
             <th class="table-cell-align header-sm">Name</th>
             <th class="table-cell-align">Description</th>
             <th class="table-cell-align header-sm">Priority</th>
             <th class="table-cell-align header-md">Status</th>
         </tr>
         <tr ng-repeat="task in tasks">
-            <td class="clickable" ng-click="openProject(task.project.id)">{{ task.project.name }}</td>
             <td>{{ task.name }}</td>
             <td>{{ task.description }}</td>
             <td class="text-capitalize">{{ task.priority }}</td>
             <td class="text-capitalize">{{ task.status }}</td>
         </tr>
         <tr ng-if="!tasks.length">
-            <td colspan="5">
+            <td colspan="4">
                 <uib-alert type="warning" class="tm-20 rm-20 lm-20"><span class="glyphicon glyphicon-warning-sign"></span>
                     &nbsp;Sorry, no results were found.
                 </uib-alert>
@@ -39,8 +26,7 @@
 
     <div ng-show="count" class="ta-mid">
         <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        items-per-page="15" force-ellipses="true" ng-change="loadTasks()"></uib-pagination>
+                        items-per-page="5" force-ellipses="true" ng-change="loadTasks()"></uib-pagination>
     </div>
-
 
 </div>
