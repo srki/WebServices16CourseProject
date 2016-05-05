@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from WS16_2012.models import Project
+from WS16_2012.models import Project, Task
 
 
 # PERMISSIONS
@@ -64,3 +64,39 @@ p1.save()
 
 p2.participants.add(u1)
 p2.save()
+
+# TASKS
+
+print 'TASK START'
+
+for i in xrange(10):
+    t = Task(name='t' + str(i),
+             status='TO DO',
+             priority='CRITICAL',
+             description="Ninja",
+             project=p1,
+             created=u2,
+             assigned=u1)
+    t.save()
+
+for i in xrange(10):
+    t = Task(name='t' + str(i+10),
+             status='IN PROGRESS',
+             priority='BLOCKER',
+             description="Ninja",
+             project=p1,
+             created=u2,
+             assigned=u1)
+    t.save()
+
+for i in xrange(10):
+    t = Task(name='t' + str(i+20),
+             status='IN PROGRESS',
+             priority='BLOCKER',
+             description="Ninja",
+             project=p2,
+             created=u2,
+             assigned=u1)
+    t.save()
+
+print 'TASK END'

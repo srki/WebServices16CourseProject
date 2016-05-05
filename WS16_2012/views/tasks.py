@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
 from WS16_2012.views.views import RestView, View
-from WS16_2012.models import Task
+from WS16_2012.models import Task, Project
 
 from django.core.paginator import Paginator
 
@@ -40,8 +40,8 @@ class TasksView(RestView):
             tasks = tasks.filter(status__in=stats)
 
         if 'priority' in request.GET:
-            stats = self.get_priority(request.GET['priority'])
-            tasks = tasks.filter(priority__in=stats)
+            prior = self.get_priority(request.GET['priority'])
+            tasks = tasks.filter(priority__in=prior)
 
         count = tasks.count()
 
@@ -54,3 +54,27 @@ class TasksView(RestView):
 
         data = [model_to_dict(instance) for instance in tasks]
         return JsonResponse({'tasks': data, 'count': count}, status=200)
+
+
+class ProjectsTasksView(View):
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def get(self, request, identifier):
+
+        try:
+            project = Project.objects.get(id=identifier)
+            tasks = project.task_set.all()
+
+            count = tasks.count()
+
+            if 'per_page' in request.GET and 'page' in request.GET:
+                per_page = request.GET['per_page']
+                page = request.GET['page']
+
+                paginator = Paginator(tasks, per_page)
+                tasks = paginator.page(page)
+
+            data = [model_to_dict(instance) for instance in tasks]
+            return JsonResponse({'tasks': data, 'count': count}, status=200)
+        except Exception:
+            return JsonResponse({'message': 'Bad request'}, status=400)
