@@ -25,8 +25,8 @@
             <td class="clickable" ng-click="openProject(task.project.id)">{{ task.project.name }}</td>
             <td>{{ task.name }}</td>
             <td>{{ task.description }}</td>
-            <td class="text-capitalize">{{ task.priority }}</td>
-            <td class="text-capitalize">{{ task.status }}</td>
+            <td class="text-capitalize">{{ task.priority | lowercase }}</td>
+            <td class="text-capitalize">{{ task.status | lowercase }}</td>
         </tr>
         <tr ng-if="!tasks.length">
             <td colspan="5">

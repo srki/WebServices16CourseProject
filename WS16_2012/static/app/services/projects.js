@@ -91,15 +91,14 @@
                         }
                     });
                 },
-                addTask: function (projectId, name, description, status, priority) {
+                createTask: function (projectId, description, priority, status) {
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/tasks',
                         data: {
-                            name: name,
                             description: description,
-                            status: status,
-                            priority: priority
+                            priority: priority,
+                            status: status
                         }
                     });
                 },

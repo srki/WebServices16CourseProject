@@ -28,14 +28,18 @@
                 );
             };
 
-            $scope.create = function () {
+            $scope.createTask = function () {
+                var scope = $scope.$new(true);
+                scope.projectId = $scope.projectId;
+
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'static/partials/task_modal.html',
-                    controller: 'TaskModalCtrl'
+                    controller: 'TaskModalCtrl',
+                    scope: scope
                 }).result.then(function (refresh) {
                     if (refresh) {
-                        $scope.loadPage();
+                        $scope.loadTasks();
                     }
                 });
             };
