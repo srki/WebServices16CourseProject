@@ -5,10 +5,10 @@ from django.http import JsonResponse
 
 class RestView(View):
     def get(self, request):
-        #try:
+        try:
             return self.rest_get(request)
-        #except:
-        #    return JsonResponse({'message': 'Bad request'}, status=400)
+        except:
+            return JsonResponse({'message': 'Bad request'}, status=400)
 
     def post(self, request):
 
