@@ -2,6 +2,7 @@
 angular.module('app.services', [
     'app.Auth',
     'app.Projects',
-    'app.Tasks'
+    'app.Tasks',
+    'app.Users'
 ]);
 
