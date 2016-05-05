@@ -8,7 +8,7 @@
     angular.module('app.Projects', [])
         .factory('Projects', function ($http) {
             return {
-                getAll: function (page, perPage, priority, status) {
+                getAll: function (page, perPage) {
                     page = page || 0;
                     perPage = perPage || 10;
 
@@ -17,9 +17,7 @@
                         url: 'api/projects',
                         params: {
                             page: page,
-                            per_page: perPage,
-                            priority: priority,
-                            status: status
+                            per_page: perPage
                         }
                     });
                 },

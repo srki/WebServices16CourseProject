@@ -3,5 +3,7 @@ angular.module('app.controllers', [
     'app.LoginCtrl',
     'app.RegisterCtrl',
     'app.LogoutCtrl',
-    'app.DashboardCtrl'
+    'app.DashboardCtrl',
+    'app.ProjectsCtrl',
+    'app.ProjectModalCtrl'
 ]);

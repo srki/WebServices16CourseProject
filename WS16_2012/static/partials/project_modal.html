@@ -1,0 +1,26 @@
+<div class="edit-modal">
+    <h3>Create a new project</h3>
+
+    <div class="input-group input-container tm-5">
+        <span class="input-group-addon input-description-135" id="name-edit">Name</span>
+        <input type="text" class="form-control" placeholder="Name" aria-describedby="name-edit" ng-model="name"/>
+    </div>
+
+    <div class="input-group input-container tm-5">
+        <span class="input-group-addon input-description-135" id="description-edit">Description</span>
+        <textarea class="form-control" placeholder="Description" aria-describedby="description-edit" rows="5" ng-model="description">
+        </textarea>
+    </div>
+
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <div class="tm-10" style="height: 34px">
+        <button type="button" class="btn btn-default pull-right" ng-click="create()">
+            <span class="glyphicon glyphicon-plus"></span>Create
+        </button>
+        <button type="button" class="btn btn-default pull-right rm-10" ng-click="close()"><span
+                class="glyphicon glyphicon-remove"></span>Close
+        </button>
+    </div>
+
+</div>

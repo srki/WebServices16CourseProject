@@ -17,3 +17,7 @@ body {
 #RegisterButton, #LoginButton, #BackButton {
     width: 370px;
 }
+
+.edit-modal {
+    padding: 10px 20px 20px 20px;
+}

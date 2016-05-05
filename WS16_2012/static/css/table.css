@@ -1,0 +1,29 @@
+.options-header {
+    width: 130px;
+}
+
+.options-header-sm {
+    width: 70px;
+}
+
+.options-button {
+    width: 65px;
+}
+
+.table-cell-align {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.table-button {
+    width: 60px;
+}
+
+.button-header {
+    text-align: center;
+    width: 90px;
+}
+
+.header-sm {
+    width: 100px;
+}

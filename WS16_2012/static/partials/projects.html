@@ -1,0 +1,21 @@
+<div id="Projects">
+    <div>
+        <h2>Projects&nbsp;
+            <button type="button" class="btn btn-default" ng-click="create()">
+                <span style="font-size: 150%" class="glyphicon glyphicon-plus"></span>
+            </button>
+        </h2>
+    </div>
+
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <table class="table table-striped table-hover table-bordered">
+        <tr>
+            <th class="table-cell-align header-sm">Name</th>
+            <th class="table-cell-align">Description</th>
+            <th class="table-cell-align button-header">View</th>
+        </tr>
+    </table>
+
+
+</div>
