@@ -1,0 +1,48 @@
+<div id="Project" class="plr-50 ptb-20">
+    <h3>Project</h3>
+
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <div>
+        <div ng-show="edit">
+            <div class="input-group input-container tm-5">
+                <span class="input-group-addon input-description-135" id="name-edit">Name</span>
+                <input type="text" class="form-control" placeholder="name" aria-describedby="name-edit" ng-model="name"/>
+            </div>
+
+            <div class="input-group input-container tm-5">
+                <span class="input-group-addon input-description-135" id="description-edit">Description</span>
+                <input type="text" class="form-control" placeholder="description" aria-describedby="description-edit"
+                       ng-model="description"/>
+            </div>
+
+            <div class="tm-10" style="height: 34px">
+                <button type="button" class="btn btn-default pull-right" ng-click="update()">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Update
+                </button>
+                <button type="button" class="btn btn-default pull-right rm-10" ng-click="edit = false">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+
+        <div ng-hide="edit" class="bm-60">
+            <h1>{{ project.name }}</h1>
+            <h4>{{ project.description }}</h4>
+            <button type="button" class="btn btn-default pull-right rm-10" ng-click="edit = true">
+                <span class="glyphicon glyphicon-edit"></span>&nbsp;Edit
+            </button>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h3>Users on the project</h3>
+        </div>
+        <div class="col-md-7">
+            <h3>Project tasks</h3>
+        </div>
+    </div>
+
+</div>
