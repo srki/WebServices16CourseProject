@@ -21,12 +21,14 @@ from WS16_2012.views.login import LoginView, LogoutView, RegisterView
 from WS16_2012.views.project import ProjectsView, ProjectView
 from WS16_2012.views.participants import RemoveParticipantsView, ParticipantsView, AddParticipantsView
 from WS16_2012.views.users import UsersView
+from WS16_2012.views.tasks import TasksView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login', LoginView.as_view()),
     url(r'^api/register', RegisterView.as_view()),
     url(r'^api/logout', LogoutView.as_view()),
+    url(r'^api/tasks', TasksView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants/append', AddParticipantsView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants/remove', RemoveParticipantsView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants', ParticipantsView.as_view()),
