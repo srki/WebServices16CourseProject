@@ -56,7 +56,7 @@ class TasksView(RestView):
         return JsonResponse({'tasks': data, 'count': count}, status=200)
 
 
-class ProjectsTasksView(View):
+class ProjectTasksView(View):
 
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def get(self, request, identifier):
@@ -64,6 +64,30 @@ class ProjectsTasksView(View):
         try:
             project = Project.objects.get(id=identifier)
             tasks = project.task_set.all()
+
+            count = tasks.count()
+
+            if 'per_page' in request.GET and 'page' in request.GET:
+                per_page = request.GET['per_page']
+                page = request.GET['page']
+
+                paginator = Paginator(tasks, per_page)
+                tasks = paginator.page(page)
+
+            data = [model_to_dict(instance) for instance in tasks]
+            return JsonResponse({'tasks': data, 'count': count}, status=200)
+        except Exception:
+            return JsonResponse({'message': 'Bad request'}, status=400)
+
+
+class ProjectTaskView(View):
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def get(self, request, project_id, task_id):
+
+        try:
+            project = Project.objects.get(id=project_id)
+            tasks = project.task_set.get(id=task_id)
 
             count = tasks.count()
 
