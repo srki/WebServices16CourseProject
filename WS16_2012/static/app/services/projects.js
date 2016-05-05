@@ -46,6 +46,37 @@
                             description: description
                         }
                     });
+                },
+                getParticipants: function (id, page, perPage) {
+                    page = page || 1;
+                    perPage = perPage || 10;
+
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + id + '/participants',
+                        params: {
+                            page: page,
+                            per_page: perPage
+                        }
+                    });
+                },
+                addParticipants: function (projectId, participantId) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects/' + projectId + '/participants/append',
+                        params: {
+                            id: participantId
+                        }
+                    });
+                },
+                removeParticipant: function (projectId, participantId) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects/' + projectId + '/participants/remove',
+                        params: {
+                            id: participantId
+                        }
+                    });
                 }
             };
         });
