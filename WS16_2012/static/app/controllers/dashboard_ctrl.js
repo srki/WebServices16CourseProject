@@ -46,6 +46,10 @@
                 $location.path('/projects/' + id);
             };
 
+            $scope.openTask = function (projectId, taskId) {
+                $location.path('/projects/' + projectId + '/tasks/' + taskId);
+            };
+
             init();
         });
 }(angular));

@@ -8,5 +8,7 @@ angular.module('app.controllers', [
     'app.ProjectModalCtrl',
     'app.ProjectCtrl',
     'app.ProjectParticipantsCtrl',
-    'app.ProjectTasksCtrl'
+    'app.ProjectTasksCtrl',
+    'app.TaskCtrl',
+    'app.TaskModalCtrl'
 ]);
