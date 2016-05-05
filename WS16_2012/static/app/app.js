@@ -23,6 +23,10 @@
                     templateUrl: 'static/partials/dashboard.html',
                     controller: 'DashboardCtrl'
                 })
+                .when('/projects', {
+                    templateUrl: 'static/partials/projects.html',
+                    controller: 'ProjectsCtrl'
+                })
                 .otherwise('/');
             $locationProvider.html5Mode(true);
         })

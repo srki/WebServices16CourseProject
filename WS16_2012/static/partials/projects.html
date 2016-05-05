@@ -1,0 +1,42 @@
+<div id="Projects">
+    <div>
+        <h2>Projects&nbsp;
+            <button type="button" class="btn btn-default" ng-click="create()">
+                <span style="font-size: 150%" class="glyphicon glyphicon-plus"></span>
+            </button>
+        </h2>
+    </div>
+
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <table class="table table-striped table-hover table-bordered">
+        <tr>
+            <th class="table-cell-align header-sm">Name</th>
+            <th class="table-cell-align">Description</th>
+            <th class="table-cell-align button-header">View</th>
+        </tr>
+        <tr ng-repeat="project in projects">
+            <td>{{ project.name }}</td>
+            <td>{{ project.description }}</td>
+            <td class="table-cell-align ta-mid">
+                <button type="button" class="btn btn-default" ng-click="open(project.id)">
+                    <span class="glyphicon glyphicon-new-window"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="!projects.length">
+            <td colspan="3">
+                <uib-alert type="warning" class="tm-20 rm-20 lm-20"><span class="glyphicon glyphicon-warning-sign"></span>
+                    &nbsp;Sorry, no results were found.
+                </uib-alert>
+            </td>
+        </tr>
+    </table>
+
+    <div style="text-align: center">
+        <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
+                        force-ellipses="true" ng-change="loadPage()"></uib-pagination>
+    </div>
+
+
+</div>

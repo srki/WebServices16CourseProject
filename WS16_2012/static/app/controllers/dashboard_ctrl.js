@@ -6,9 +6,11 @@
     "use strict";
 
     angular.module('app.DashboardCtrl', [])
-        .controller('DashboardCtrl', function ($scope) {
+        .controller('DashboardCtrl', function ($scope, $location, Auth) {
             var init = function () {
-
+                if (!Auth.hasStoredCredentials()) {
+                    $location.path("/login");
+                }
             };
 
             init();

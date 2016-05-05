@@ -1,5 +1,6 @@
 /*global angular*/
 angular.module('app.services', [
-    'app.Auth'
+    'app.Auth',
+    'app.Projects'
 ]);
 

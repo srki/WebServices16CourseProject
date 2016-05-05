@@ -10,11 +10,11 @@
             Auth.logout().then(
                 function () {
                     $rootScope.display = 'login';
-                    $location.path('/');
+                    $location.path('/login');
                 },
                 function () {
                     $rootScope.display = 'login';
-                    $location.path('/');
+                    $location.path('/login');
                 }
             );
         });
