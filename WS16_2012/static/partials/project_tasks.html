@@ -9,7 +9,7 @@
             <th class="table-cell-align header-sm">Priority</th>
             <th class="table-cell-align header-md">Status</th>
         </tr>
-        <tr ng-repeat="task in tasks">
+        <tr ng-repeat="task in tasks" class="clickable" ng-click="open(task.id)">
             <td>{{ task.name }}</td>
             <td>{{ task.description }}</td>
             <td class="text-capitalize">{{ task.priority }}</td>

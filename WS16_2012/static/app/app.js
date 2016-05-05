@@ -31,6 +31,10 @@
                     templateUrl: 'static/partials/project.html',
                     controller: 'ProjectCtrl'
                 })
+                .when('/projects/:projectId/tasks/:task', {
+                    templateUrl: 'static/partials/task.html',
+                    controller: 'TaskController'
+                })
                 .otherwise('/');
             $locationProvider.html5Mode(true);
         })

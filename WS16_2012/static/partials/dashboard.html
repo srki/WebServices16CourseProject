@@ -21,7 +21,7 @@
             <th class="table-cell-align header-sm">Priority</th>
             <th class="table-cell-align header-md">Status</th>
         </tr>
-        <tr ng-repeat="task in tasks">
+        <tr ng-repeat="task in tasks" class="clickable" ng-click="openTask(task.project.id, task.id)">
             <td class="clickable" ng-click="openProject(task.project.id)">{{ task.project.name }}</td>
             <td>{{ task.name }}</td>
             <td>{{ task.description }}</td>
