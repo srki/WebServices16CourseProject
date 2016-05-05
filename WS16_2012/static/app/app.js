@@ -1,7 +1,7 @@
 /*global angular*/
 (function (angular) {
     "use strict";
-    angular.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.constants', 'ngRoute', 'ngAnimate', 'ui.bootstrap'])
+    angular.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.constants', 'ngRoute', 'ngAnimate', 'ui.bootstrap', 'oi.select'])
         .config(function ($routeProvider, $locationProvider) {
             $routeProvider
                 .when('/', {
