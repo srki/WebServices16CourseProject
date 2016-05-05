@@ -4,13 +4,13 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView
+from WS16_2012.views.views import RestView, View
 from WS16_2012.models import Project
 
 from django.core.paginator import Paginator
 
 
-class ProjectView(RestView):
+class ProjectsView(RestView):
 
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def rest_get(self, request):
@@ -49,3 +49,11 @@ class ProjectView(RestView):
             return JsonResponse({}, status=200)
         else:
             return JsonResponse({'message': 'Name or description not provided!'}, status=400)
+
+
+class ProjectView(View):
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def get(self, request, id):
+        #p = login
+        return JsonResponse("", status=200)

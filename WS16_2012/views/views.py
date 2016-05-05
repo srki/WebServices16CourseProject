@@ -7,7 +7,7 @@ class RestView(View):
     def get(self, request):
         try:
             return self.rest_get(request)
-        except:
+        except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
     def post(self, request):
@@ -16,9 +16,9 @@ class RestView(View):
             json_values = json.loads(request.body)
             return self.rest_post(request, json_values)
 
-        except ValueError:
+        except ValueError as e:
             return JsonResponse({'message': 'Invalid JSON!'}, status=400)
-        except Exception:
+        except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
     def rest_get(self, request):
