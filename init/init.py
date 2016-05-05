@@ -15,17 +15,27 @@ p1.save()
 
 # USERS
 u1 = User.objects.create_user('a', password='a')
-
 u1.user_permissions.add(p1)
-
 u1.save()
 
 u2 = User.objects.create_user('b', password='b')
-
 u2.user_permissions.add(p1)
 u2.user_permissions.add(p2)
-
 u2.save()
+
+
+u3 = User.objects.create_user('q', password='q')
+u3.user_permissions.add(p1)
+u3.save()
+
+
+u4 = User.objects.create_user('w', password='w')
+u4.user_permissions.add(p1)
+u4.save()
+
+u5 = User.objects.create_user('e', password='e')
+u5.user_permissions.add(p1)
+u5.save()
 
 for i in range(ord('a'), ord('z')+1):
     u = User.objects.create_user("user" + chr(i), password=chr(i))
@@ -46,6 +56,10 @@ for i in xrange(10):
 
 # PARTICIPANTS
 p1.participants.add(u1)
+p1.participants.add(u2)
+p1.participants.add(u3)
+p1.participants.add(u4)
+p1.participants.add(u5)
 p1.save()
 
 p2.participants.add(u1)

@@ -14,7 +14,6 @@ from django.core.paginator import Paginator
 
 
 class ProjectsView(RestView):
-
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def rest_get(self, request):
 
@@ -26,8 +25,6 @@ class ProjectsView(RestView):
             page = request.GET['page']
 
             paginator = Paginator(projects, per_page)
-
-            count = paginator.count
             projects = paginator.page(page)
 
         data = [model_to_dict(instance, exclude=['participants']) for instance in projects]
@@ -45,7 +42,6 @@ class ProjectsView(RestView):
 
 
 class ProjectView(View):
-
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def get(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
@@ -77,7 +73,6 @@ class ProjectView(View):
 
 
 class AddParticipantsView(View):
-
     @method_decorator(permission_required(perm='auth.admin', raise_exception=True))
     def post(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
@@ -103,7 +98,6 @@ class AddParticipantsView(View):
 
 
 class RemoveParticipantsView(View):
-
     @method_decorator(permission_required(perm='auth.admin', raise_exception=True))
     def post(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
@@ -127,3 +121,26 @@ class RemoveParticipantsView(View):
             return JsonResponse({'message': 'Invalid JSON!'}, status=400)
         except Exception:
             return JsonResponse({'message': 'Bad request!'}, status=400)
+
+
+class ParticipantsView(View):
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def get(self, request, identifier):
+
+        try:
+            participants = Project.objects.get(id=int(identifier)).participants.all()
+            count = participants.count()
+
+            if 'per_page' in request.GET and 'page' in request.GET:
+                per_page = request.GET['per_page']
+                page = request.GET['page']
+
+                paginator = Paginator(participants, per_page)
+                participants = paginator.page(page)
+
+            data = [model_to_dict(instance, exclude=['participants'], fields=['username', 'id']) for instance in
+                    participants]
+            return JsonResponse({'users': data, 'count': count}, status=200)
+
+        except Exception as e:
+            return JsonResponse({'message': 'Bad request'}, status=400)

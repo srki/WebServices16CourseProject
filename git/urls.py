@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from WS16_2012.views.login import LoginView, LogoutView, RegisterView
-from WS16_2012.views.project import ProjectsView, ProjectView, AddParticipantsView, RemoveParticipantsView
+from WS16_2012.views.project import ProjectsView, AddParticipantsView
+from WS16_2012.views.project import RemoveParticipantsView, ParticipantsView
 from WS16_2012.views.users import UsersView
 
 urlpatterns = [
@@ -28,7 +29,7 @@ urlpatterns = [
     url(r'^api/logout', LogoutView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants/append', AddParticipantsView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants/remove', RemoveParticipantsView.as_view()),
-    url(r'^api/projects/(?P<identifier>\d+)', ProjectView.as_view()),
+    url(r'^api/projects/(?P<identifier>\d+)/participants', ParticipantsView.as_view()),
     url(r'^api/projects', ProjectsView.as_view()),
     url(r'^api/users', UsersView.as_view()),
     url(r'^', TemplateView.as_view(template_name="index.html"))
