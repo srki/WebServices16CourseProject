@@ -10,6 +10,7 @@ from WS16_2012.views.views import RestView, View
 from WS16_2012.models import Task, Project
 
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
 
 
 class TasksView(RestView):
@@ -84,11 +85,29 @@ class ProjectTasksView(View):
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def post(self, request, identifier):
         try:
             project = Project.objects.get(id=identifier)
+            creator = request.user
 
+            task_count = project.task_set.all().count()
+            values = json.loads(request.body)
 
+            task = Task(name=project.name + '-' + str(task_count),
+                        status=values['status'],
+                        priority=values['priority'],
+                        description=values['description'])
+
+            task.project = project
+            task.created = creator
+
+            if 'assigned' in values:
+                task.assigned = User.objects.get(id=values['assigned'])
+
+            task.save()
+
+            return JsonResponse({}, status=200)
 
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
