@@ -6,5 +6,6 @@ angular.module('app.controllers', [
     'app.DashboardCtrl',
     'app.ProjectsCtrl',
     'app.ProjectModalCtrl',
-    'app.ProjectCtrl'
+    'app.ProjectCtrl',
+    'app.ProjectParticipantsCtrl'
 ]);

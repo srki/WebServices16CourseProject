@@ -28,6 +28,7 @@
                     function (response) {
                         $scope.projects = response.data.projects;
                         $scope.itemsCount = response.data.count;
+                        $scope.alertMessage = null;
                     },
                     function (response) {
                         $scope.alertMessage = "Error: " + response.data.message;

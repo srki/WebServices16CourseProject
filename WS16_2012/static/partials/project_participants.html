@@ -1,0 +1,34 @@
+<div ng-controller="ProjectParticipantsCtrl">
+    <h3>Users on the project</h3>
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <ul>
+        <li ng-repeat="participant in participants">
+            <span class="glyphicon glyphicon-trash clickable" ng-click="removeParticipant(participant.id)"></span>&nbsp;
+            <span class="h4">{{ participant.username }}</span>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-9">
+            <input type="text" ng-model="newParticipant" placeholder="Type user name" typeahead-editable="false"
+                   uib-typeahead="user as user.username for user in getUsers($viewValue)" typeahead-loading="loadingLocations"
+                   typeahead-no-results="noResults" class="form-control">
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            <div ng-show="noResults">
+                <i class="glyphicon glyphicon-remove"></i> No Results Found
+            </div>
+
+            <div ng-show="itemsCount" class="ta-mid">
+                <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
+                                force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
+            </div>
+        </div>
+
+        <div class="col-md-3 ta-mid">
+            <button type="button" class="btn btn-default pull-right rm-10" ng-click="addParticipant()">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp;Add
+            </button>
+        </div>
+    </div>
+</div>

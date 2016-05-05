@@ -97,3 +97,7 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+
+.clickable {
+    cursor: pointer;
+}

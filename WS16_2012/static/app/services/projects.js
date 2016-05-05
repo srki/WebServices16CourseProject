@@ -47,7 +47,7 @@
                         }
                     });
                 },
-                getParticipants: function (id, page, perPage) {
+                getAllParticipants: function (id, page, perPage) {
                     page = page || 1;
                     perPage = perPage || 10;
 
@@ -60,12 +60,12 @@
                         }
                     });
                 },
-                addParticipants: function (projectId, participantId) {
+                addParticipant: function (projectId, participantId) {
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/participants/append',
-                        params: {
-                            id: participantId
+                        data: {
+                            userId: participantId
                         }
                     });
                 },
@@ -73,8 +73,8 @@
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/participants/remove',
-                        params: {
-                            id: participantId
+                        data: {
+                            userId: participantId
                         }
                     });
                 }
