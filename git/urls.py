@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from WS16_2012.views.login import LoginView, LogoutView, RegisterView
+from WS16_2012.views.project import ProjectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login', LoginView.as_view()),
     url(r'^api/register', RegisterView.as_view()),
     url(r'^api/logout', LogoutView.as_view()),
+    url(r'^api/projects', ProjectView.as_view()),
     url(r'^', TemplateView.as_view(template_name="index.html"))
 ]
 
