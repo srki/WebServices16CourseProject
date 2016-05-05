@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=30)
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=2000)
     participants = models.ManyToManyField(User)
 
