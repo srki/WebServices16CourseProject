@@ -47,7 +47,7 @@
                         }
                     });
                 },
-                getParticipants: function (id, page, perPage) {
+                getAllParticipants: function (id, page, perPage) {
                     page = page || 1;
                     perPage = perPage || 10;
 
@@ -60,12 +60,12 @@
                         }
                     });
                 },
-                addParticipants: function (projectId, participantId) {
+                addParticipant: function (projectId, participantId) {
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/participants/append',
-                        params: {
-                            id: participantId
+                        data: {
+                            userId: participantId
                         }
                     });
                 },
@@ -73,11 +73,68 @@
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/participants/remove',
+                        data: {
+                            userId: participantId
+                        }
+                    });
+                },
+                getAllTasks: function (id, page, perPage) {
+                    page = page || 1;
+                    perPage = perPage || 5;
+
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + id + '/tasks',
                         params: {
-                            id: participantId
+                            page: page,
+                            per_page: perPage
+                        }
+                    });
+                },
+                addTask: function (projectId, name, description, status, priority) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects/' + projectId + '/tasks',
+                        data: {
+                            name: name,
+                            description: description,
+                            status: status,
+                            priority: priority
+                        }
+                    });
+                },
+                removeTask: function (projectId, taskId) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId
+                    });
+                },
+                editTask: function (projectId, taskId, name, description, status, priority) {
+                    return $http({
+                        method: 'PUT',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId,
+                        data: {
+                            name: name,
+                            description: description,
+                            status: status,
+                            priority: priority
+                        }
+                    });
+                },
+                getTaskHistory: function (projectId, taskId, page, perPage) {
+                    page = page || 1;
+                    perPage = perPage || 3;
+
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/history',
+                        params: {
+                            page: page,
+                            perPage: perPage
                         }
                     });
                 }
+
             };
         });
 }(angular));

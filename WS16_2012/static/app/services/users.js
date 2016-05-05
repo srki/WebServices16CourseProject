@@ -13,7 +13,7 @@
                     return $http({
                         method: 'GET',
                         url: '/api/users',
-                        data: {
+                        params: {
                             pattern: pattern,
                             count: count
                         }
