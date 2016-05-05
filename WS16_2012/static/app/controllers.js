@@ -5,5 +5,6 @@ angular.module('app.controllers', [
     'app.LogoutCtrl',
     'app.DashboardCtrl',
     'app.ProjectsCtrl',
-    'app.ProjectModalCtrl'
+    'app.ProjectModalCtrl',
+    'app.ProjectCtrl'
 ]);

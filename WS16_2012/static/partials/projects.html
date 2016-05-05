@@ -33,7 +33,7 @@
         </tr>
     </table>
 
-    <div style="text-align: center" ng-show="itemsCount">
+    <div ng-show="itemsCount" class="ta-mid">
         <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
                         force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>

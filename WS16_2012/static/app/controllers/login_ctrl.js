@@ -9,13 +9,19 @@
         .controller('LoginCtrl', function ($rootScope, $scope, $location, Auth) {
 
             var init = function () {
+                Auth.isLogged().then(
+                    function (response) {
+                        Auth.storeCredentials(response.data.role);
+                        $location.path('/dashboard');
+                    },
+                    function () {
+                        $location.path("/login");
+                    }
+                );
+
                 $scope.username = "";
                 $scope.password = "";
                 $scope.alertMessage = null;
-
-                if (Auth.hasStoredCredentials()) {
-                    $location.path("/dashboard");
-                }
             };
 
             $scope.login = function () {

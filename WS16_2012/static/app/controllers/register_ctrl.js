@@ -8,13 +8,20 @@
     angular.module('app.RegisterCtrl', [])
         .controller('RegisterCtrl', function ($scope, $location, Auth, USERNAME_REGEX) {
             var init = function () {
+                Auth.isLogged().then(
+                    function (response) {
+                        Auth.storeCredentials(response.data.role);
+                        $location.path("/dashboard");
+                    },
+                    function () {
+                        $location.path("/login");
+                    }
+                );
+
                 $scope.username = "";
                 $scope.password = "";
                 $scope.renteredPassword = "";
                 $scope.alertMessage = null;
-                if (Auth.hasStoredCredentials()) {
-                    $location.path("/dashboard");
-                }
             };
 
             $scope.register = function () {

@@ -27,6 +27,10 @@
                     templateUrl: 'static/partials/projects.html',
                     controller: 'ProjectsCtrl'
                 })
+                .when('/projects/:id', {
+                    templateUrl: 'static/partials/project.html',
+                    controller: 'ProjectCtrl'
+                })
                 .otherwise('/');
             $locationProvider.html5Mode(true);
         })
