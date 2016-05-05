@@ -32,3 +32,42 @@ p3.save()
 
 p4 = Project(name='Vizlore 4', description='Vidj sto je lep nas ios projekat')
 p4.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
+
+p5 = Project(name='Vizlore 5', description='Vidj sto je lep nas ios projekat')
+p5.save()
