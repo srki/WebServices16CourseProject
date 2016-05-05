@@ -21,8 +21,8 @@
             $scope.loadPage = function () {
                 Projects.getAll($scope.currentPage).then(
                     function (response) {
-                        $scope.projects = response.data.items;
-                        $scope.itemsCount = response.data.itemsCount;
+                        $scope.projects = response.data.projects;
+                        $scope.itemsCount = response.data.count;
                     },
                     function (response) {
                         $scope.alertMessage = "Error: " + response.data.message;
