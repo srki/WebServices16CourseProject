@@ -27,3 +27,11 @@
 .header-sm {
     width: 100px;
 }
+
+.header-md {
+    width: 150px;
+}
+
+.header-lg {
+    width: 200px;
+}

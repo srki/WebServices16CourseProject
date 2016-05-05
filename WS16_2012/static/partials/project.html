@@ -1,6 +1,10 @@
 <div id="Project" class="plr-50 ptb-20">
     <h3>Project</h3>
 
+    <button ng-hide="edit" type="button" class="btn btn-default pull-right rm-10 bm-10" ng-click="edit = true">
+        <span class="glyphicon glyphicon-edit"></span>&nbsp;Edit
+    </button>
+
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <div>
@@ -29,9 +33,7 @@
         <div ng-hide="edit" class="bm-60">
             <h1>{{ project.name }}</h1>
             <h4>{{ project.description }}</h4>
-            <button type="button" class="btn btn-default pull-right rm-10" ng-click="edit = true">
-                <span class="glyphicon glyphicon-edit"></span>&nbsp;Edit
-            </button>
+
         </div>
     </div>
     <hr/>
@@ -41,7 +43,7 @@
             <ng-include src="'static/partials/project_participants.html'"></ng-include>
         </div>
         <div class="col-md-7">
-            <h3>Project tasks</h3>
+            <ng-include src="'static/partials/project_tasks.html'"></ng-include>
         </div>
     </div>
 

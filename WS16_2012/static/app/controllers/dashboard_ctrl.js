@@ -42,6 +42,10 @@
                 );
             };
 
+            $scope.openProject = function (id) {
+                $location.path('/projects/' + id);
+            };
+
             init();
         });
 }(angular));
