@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 
@@ -41,7 +43,7 @@ class ProjectsView(RestView):
             return JsonResponse({'message': 'Name or description not provided!'}, status=400)
 
     @method_decorator(permission_required(perm='auth.admin', raise_exception=True))
-    def rest_post(self, request, json_values):
+    def rest_put(self, request, json_values, id):
 
         if 'name' in json_values and 'description' in json_values:
             p = Project(name=json_values['name'], description=json_values['description'])
@@ -57,6 +59,25 @@ class ProjectView(View):
     def get(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
         if project:
+            return JsonResponse(model_to_dict(project, exclude=['participants']), status=200)
+        else:
+            return JsonResponse({'message': 'Not found'}, status=404)
+
+    @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    def put(self, request, identifier):
+
+        try:
+            values = json.loads(request.body)
+        except ValueError:
+            return JsonResponse({'message': 'Invalid JSON!'}, status=400)
+
+        project = Project.objects.get(id=int(identifier))
+        if project and 'name' in values and 'description' in values:
+
+            project.name = values['name']
+            project.description = values['description']
+            project.save()
+
             return JsonResponse(model_to_dict(project, exclude=['participants']), status=200)
         else:
             return JsonResponse({'message': 'Not found'}, status=404)
