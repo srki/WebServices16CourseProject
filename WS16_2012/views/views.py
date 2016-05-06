@@ -13,7 +13,7 @@ class PrivilegeCheck:
         project.participants.get(id=user.id)
 
     @staticmethod
-    def can_edit_tasks_project(project, user):
+    def can_access_project(project, user):
 
         if user.has_perm('auth.admin'):
             return
@@ -21,12 +21,13 @@ class PrivilegeCheck:
         project.participants.get(id=user.id)
 
     @staticmethod
-    def can_edit_comment(project, user):
+    def can_edit_comment(comment, user):
 
         if user.has_perm('auth.admin'):
             return
 
-        project.participants.get(id=user.id)
+        if comment.created != user.id:
+            raise Exception
 
 
 class RestView(View):

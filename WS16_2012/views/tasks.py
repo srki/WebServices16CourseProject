@@ -228,7 +228,7 @@ class ProjectTaskHistoryView(View):
 
                 paginator = Paginator(history, per_page)
 
-                page = min(page, paginator.num_pages)
+                page = min(int(page), paginator.num_pages)
                 history = paginator.page(page)
 
             data = [model_to_dict(instance) for instance in history]

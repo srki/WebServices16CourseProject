@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import View
+from WS16_2012.views.views import View, PrivilegeCheck
 from WS16_2012.models import Project
 from django.contrib.auth.models import User
 
@@ -78,7 +78,7 @@ class ParticipantsView(View):
 
                 paginator = Paginator(participants, per_page)
 
-                page = min(page, paginator.num_pages)
+                page = min(int(page), paginator.num_pages)
                 participants = paginator.page(page)
 
             data = [model_to_dict(instance, exclude=['participants'], fields=['username', 'id']) for instance in

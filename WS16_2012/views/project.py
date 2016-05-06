@@ -25,7 +25,7 @@ class ProjectsView(RestView):
 
             paginator = Paginator(projects, per_page)
 
-            page = min(page, paginator.num_pages)
+            page = min(int(page), paginator.num_pages)
             projects = paginator.page(page)
 
         data = [model_to_dict(instance, exclude=['participants']) for instance in projects]
