@@ -14,7 +14,7 @@ class LoginView(RestView):
 
         if request.user.is_authenticated():
             role = 'admin' if request.user.has_perm('auth.admin') else 'user'
-            return JsonResponse({'role': role}, status=200)
+            return JsonResponse({'role': role, 'id': request.user.id}, status=200)
 
         return JsonResponse({}, status=403)
 
@@ -26,7 +26,7 @@ class LoginView(RestView):
             login(request, user)
 
             role = 'admin' if user.has_perm('auth.admin') else 'user'
-            return JsonResponse({'role': role}, status=200)
+            return JsonResponse({'role': role, 'id': user.id}, status=200)
 
         else:
             return JsonResponse({'message': "The provided credentials are not valid!"}, status=400)
