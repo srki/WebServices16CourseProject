@@ -10,8 +10,9 @@
             var init = function () {
                 $scope.newParticipant = null;
                 $scope.participants = [];
-                $scope.itemsCount = 0;
+                $scope.count = 0;
                 $scope.currentPage = 1;
+                $scope.perPage = 10;
 
                 $scope.loadParticipants();
             };
@@ -23,10 +24,15 @@
             };
 
             $scope.loadParticipants = function () {
-                Projects.getAllParticipants($scope.projectId, $scope.currentPage).then(
+                Projects.getAllParticipants($scope.projectId, $scope.currentPage, $scope.perPage).then(
                     function (response) {
                         $scope.participants = response.data.users;
-                        $scope.itemsCount = response.data.count;
+                        $scope.count = response.data.count;
+
+                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                        }
+
                         $scope.alertMessage = null;
                     },
                     function (response) {

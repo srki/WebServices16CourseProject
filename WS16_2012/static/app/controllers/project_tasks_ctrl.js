@@ -11,15 +11,21 @@
                 $scope.tasks = [];
                 $scope.count = 0;
                 $scope.currentPage = 1;
+                $scope.perPage = 5;
 
                 $scope.loadTasks();
             };
 
             $scope.loadTasks = function () {
-                Projects.getAllTasks($scope.projectId, $scope.currentPage).then(
+                Projects.getAllTasks($scope.projectId, $scope.currentPage, $scope.perPage).then(
                     function (response) {
                         $scope.tasks = response.data.tasks;
                         $scope.count = response.data.count;
+
+                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                        }
+
                         $scope.alertMessage = null;
                     },
                     function (response) {

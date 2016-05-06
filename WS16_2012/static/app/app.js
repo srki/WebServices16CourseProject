@@ -44,7 +44,7 @@
             };
         })
         .run(function ($rootScope) {
-            $rootScope.user = null;
+            $rootScope.userId = null;
             $rootScope.display = 'login';
         });
 }(angular));

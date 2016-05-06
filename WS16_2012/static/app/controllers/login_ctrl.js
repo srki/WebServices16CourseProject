@@ -6,12 +6,12 @@
     "use strict";
 
     angular.module('app.LoginCtrl', [])
-        .controller('LoginCtrl', function ($rootScope, $scope, $location, Auth) {
+        .controller('LoginCtrl', function ($scope, $location, Auth) {
 
             var init = function () {
                 Auth.isLogged().then(
                     function (response) {
-                        Auth.storeCredentials(response.data.role);
+                        Auth.storeCredentials(response.data.role, response.data.id);
                         $location.path('/dashboard');
                     },
                     function () {
@@ -39,7 +39,7 @@
 
                 Auth.login($scope.username, $scope.password).then(
                     function (response) {
-                        $rootScope.display = response.data.role;
+                        Auth.storeCredentials(response.data.role, response.data.id);
                         $scope.alertMessage = null;
                         $location.path('/dashboard');
                     },

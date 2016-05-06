@@ -10,7 +10,7 @@
             var init = function () {
                 Auth.isLogged().then(
                     function (response) {
-                        Auth.storeCredentials(response.data.role);
+                        Auth.storeCredentials(response.data.role, response.data.id);
                     },
                     function () {
                         $location.path("/login");
@@ -23,6 +23,7 @@
                 $scope.selectedStatuses = [];
                 $scope.currentPage = 1;
                 $scope.count = 0;
+                $scope.perPage = 10;
 
                 $scope.loadTasks();
                 $scope.$watch('selectedPriorities', $scope.loadTasks);
@@ -30,10 +31,15 @@
             };
 
             $scope.loadTasks = function () {
-                Tasks.getAll($scope.currentPage, 15, $scope.selectedPriorities, $scope.selectedStatuses).then(
+                Tasks.getAll($scope.currentPage, $scope.perPage, $scope.selectedPriorities, $scope.selectedStatuses).then(
                     function (response) {
                         $scope.tasks = response.data.tasks;
                         $scope.count = response.data.count;
+
+                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                        }
+
                         $scope.alertMessage = null;
                     },
                     function (response) {

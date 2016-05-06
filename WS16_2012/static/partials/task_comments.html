@@ -8,12 +8,9 @@
     <table class="table table-striped table-hover">
         <tr ng-repeat="comment in comments">
             <td ng-class="{'text-italic': editId == comment.id}">
-                <span class="lp-10">
-                    <b>{{ comment.created }}</b> {{ comment.text }}
-                    <br/>
-                    {{ comment.date | date:'medium' }}
-                    {{ comment.id }}
-                </span>
+                <span class="lp-10"><b>{{ comment.created.username }}:</b> {{ comment.text }}</span>
+                <br/>
+                <span class="lp-10">{{ comment.date | date:'medium' }}</span>
             </td>
             <td class="ta-mid" style="vertical-align: middle;">
                 <span class="glyphicon glyphicon-edit clickable" ng-click="setEdit(comment.id, comment.text)"></span>

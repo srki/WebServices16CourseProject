@@ -3,8 +3,8 @@
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <div ng-show="itemsCount" class="ta-mid">
-        <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
+        <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
+                        items-per-page="perPage" force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
     </div>
 
     <ul>

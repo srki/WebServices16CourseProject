@@ -43,7 +43,8 @@
                 hasStoredCredentials: function () {
                     return $rootScope.display === 'user' || $rootScope.display === 'admin';
                 },
-                storeCredentials: function (display) {
+                storeCredentials: function (display, userId) {
+                    $rootScope.userId = userId;
                     $rootScope.display = display;
                 }
             };

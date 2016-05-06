@@ -30,7 +30,7 @@
 
     <div ng-show="itemsCount" class="ta-mid">
         <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        force-ellipses="true" ng-change="loadPage()"></uib-pagination>
+                        items-per-page="perPage" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>
 
 </div>

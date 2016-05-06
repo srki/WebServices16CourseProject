@@ -20,7 +20,7 @@
                 init = function () {
                     Auth.isLogged().then(
                         function (response) {
-                            Auth.storeCredentials(response.data.role);
+                            Auth.storeCredentials(response.data.role, response.data.id);
                         },
                         function () {
                             $location.path("/login");
@@ -36,7 +36,7 @@
 
                     $scope.edit = false;
                     $scope.code = "";
-                    $scope.subject = "Subject";
+                    $scope.subject = "";
                     $scope.description = "";
                     $scope.priority = "";
                     $scope.status = "";
@@ -44,10 +44,6 @@
                     Projects.getTaskById($scope.projectId, $scope.taskId).then(
                         function (response) {
                             $scope.task = response.data;
-                            // TODO: remove 2 following lines
-                            $scope.task.code = $scope.task.name;
-                            $scope.task.subject = "test subject";
-
                             initEditFields($scope.task);
                         },
                         function (response) {

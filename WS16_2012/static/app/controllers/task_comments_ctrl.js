@@ -12,15 +12,21 @@
                 $scope.count = 0;
                 $scope.currentPage = 1;
                 $scope.editId = null;
+                $scope.perPage = 5;
 
                 $scope.loadComments();
             };
 
             $scope.loadComments = function () {
-                Projects.getAllComments($scope.projectId, $scope.taskId, $scope.currentPage, 5).then(
+                Projects.getAllComments($scope.projectId, $scope.taskId, $scope.currentPage, $scope.perPage).then(
                     function (response) {
                         $scope.comments = response.data.comments;
                         $scope.count = response.data.count;
+
+                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                        }
+
                         $scope.alertMessage = null;
                     },
                     function (response) {
