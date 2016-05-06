@@ -10,7 +10,6 @@ from django.utils.decorators import method_decorator
 from WS16_2012.views.views import RestView, View
 from WS16_2012.models import Project, Comment
 
-from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
 
@@ -29,6 +28,8 @@ class CommentsView(View):
                 page = request.GET['page']
 
                 paginator = Paginator(comments, per_page)
+
+                page = min(page, paginator.num_pages)
                 comments = paginator.page(page)
 
             data = []

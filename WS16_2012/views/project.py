@@ -24,6 +24,8 @@ class ProjectsView(RestView):
             page = request.GET['page']
 
             paginator = Paginator(projects, per_page)
+
+            page = min(page, paginator.num_pages)
             projects = paginator.page(page)
 
         data = [model_to_dict(instance, exclude=['participants']) for instance in projects]
@@ -44,6 +46,7 @@ class ProjectView(View):
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def get(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
+
         if project:
             return JsonResponse(model_to_dict(project, exclude=['participants']), status=200)
         else:

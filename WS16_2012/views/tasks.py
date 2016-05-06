@@ -55,6 +55,8 @@ class TasksView(RestView):
             page = request.GET['page']
 
             paginator = Paginator(tasks, per_page)
+
+            page = min(page, paginator.num_pages)
             tasks = paginator.page(page)
 
         data = []
@@ -225,6 +227,8 @@ class ProjectTaskHistoryView(View):
                 page = request.GET['page']
 
                 paginator = Paginator(history, per_page)
+
+                page = min(page, paginator.num_pages)
                 history = paginator.page(page)
 
             data = [model_to_dict(instance) for instance in history]

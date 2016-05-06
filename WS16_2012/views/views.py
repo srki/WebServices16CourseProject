@@ -3,6 +3,32 @@ from django.views.generic import View
 from django.http import JsonResponse
 
 
+class PrivilegeCheck:
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def is_on_project(project, user):
+        project.participants.get(id=user.id)
+
+    @staticmethod
+    def can_edit_tasks_project(project, user):
+
+        if user.has_perm('auth.admin'):
+            return
+
+        project.participants.get(id=user.id)
+
+    @staticmethod
+    def can_edit_comment(project, user):
+
+        if user.has_perm('auth.admin'):
+            return
+
+        project.participants.get(id=user.id)
+
+
 class RestView(View):
     def get(self, request):
         try:

@@ -77,6 +77,8 @@ class ParticipantsView(View):
                 page = request.GET['page']
 
                 paginator = Paginator(participants, per_page)
+
+                page = min(page, paginator.num_pages)
                 participants = paginator.page(page)
 
             data = [model_to_dict(instance, exclude=['participants'], fields=['username', 'id']) for instance in
