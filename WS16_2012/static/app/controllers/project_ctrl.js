@@ -19,6 +19,8 @@
 
                 $scope.projectId = $routeParams.id;
                 $scope.project = {};
+
+                $scope.edit = false;
                 $scope.name = "";
                 $scope.description = "";
 
@@ -27,6 +29,7 @@
                         $scope.project = response.data;
                         $scope.name = $scope.project.name;
                         $scope.description = $scope.project.description;
+                        $scope.alertMessage = null;
                     },
                     function (response) {
                         $scope.alertMessage = "Error: " + response.data.message;

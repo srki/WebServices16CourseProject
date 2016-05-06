@@ -31,12 +31,17 @@
                     templateUrl: 'static/partials/project.html',
                     controller: 'ProjectCtrl'
                 })
-                .when('/projects/:projectId/tasks/:task', {
+                .when('/projects/:projectId/tasks/:taskId', {
                     templateUrl: 'static/partials/task.html',
-                    controller: 'TaskController'
+                    controller: 'TaskCtrl'
                 })
                 .otherwise('/');
             $locationProvider.html5Mode(true);
+        })
+        .filter('capitalize', function () {
+            return function (input) {
+                return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+            };
         })
         .run(function ($rootScope) {
             $rootScope.user = null;

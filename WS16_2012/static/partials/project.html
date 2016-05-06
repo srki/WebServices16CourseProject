@@ -8,6 +8,11 @@
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <div>
+        <div ng-hide="edit" class="bm-60">
+            <h1>{{ project.name }}</h1>
+            <h4>{{ project.description }}</h4>
+        </div>
+
         <div ng-show="edit">
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="name-edit">Name</span>
@@ -29,12 +34,8 @@
                 </button>
             </div>
         </div>
-
-        <div ng-hide="edit" class="bm-60">
-            <h1>{{ project.name }}</h1>
-            <h4>{{ project.description }}</h4>
-        </div>
     </div>
+
     <hr/>
 
     <div class="row">
