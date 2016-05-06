@@ -91,6 +91,12 @@
                         }
                     });
                 },
+                getTaskById: function (projectId, taskId) {
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId
+                    });
+                },
                 createTask: function (projectId, description, priority, status) {
                     return $http({
                         method: 'POST',
@@ -130,6 +136,43 @@
                         params: {
                             page: page,
                             perPage: perPage
+                        }
+                    });
+                },
+                getAllCommentsForTask: function (projectId, taskId, page, perPage) {
+                    page = page || 1;
+                    perPage = perPage || 10;
+
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments',
+                        params: {
+                            page: page,
+                            perPage: perPage
+                        }
+                    })
+                },
+                getCommentById: function (projectId, taskId, commentId) {
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments/' + commentId
+                    });
+                },
+                createComment: function (projectId, taskId, text) {
+                    return $http({
+                        method: 'POST',
+                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments',
+                        data: {
+                            text: text
+                        }
+                    });
+                },
+                updateComment: function (projectId, taskId, commentId, text) {
+                    return $http({
+                        method: 'PUT',
+                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments/' + commentId,
+                        data: {
+                            text: text
                         }
                     });
                 }

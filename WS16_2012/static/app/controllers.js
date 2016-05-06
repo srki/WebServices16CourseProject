@@ -10,5 +10,7 @@ angular.module('app.controllers', [
     'app.ProjectParticipantsCtrl',
     'app.ProjectTasksCtrl',
     'app.TaskCtrl',
-    'app.TaskModalCtrl'
+    'app.TaskModalCtrl',
+    'app.TaskCommentsCtrl',
+    'app.TaskHistoryCtrl'
 ]);
