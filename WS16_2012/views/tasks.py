@@ -61,6 +61,9 @@ class TasksView(RestView):
         for instance in tasks:
             t = model_to_dict(instance)
             t['project'] = model_to_dict(instance.project, fields=['id', 'name'])
+            t['created'] = model_to_dict(User.objects.get(id=t['created']), fields=['username', 'id'])
+            t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+
             data.append(t)
 
         return JsonResponse({'tasks': data, 'count': count}, status=200)
@@ -84,7 +87,15 @@ class ProjectTasksView(View):
                 paginator = Paginator(tasks, per_page)
                 tasks = paginator.page(page)
 
-            data = [model_to_dict(instance) for instance in tasks]
+            data = []
+            for instance in tasks:
+                t = model_to_dict(instance)
+                t['project'] = model_to_dict(instance.project, fields=['id', 'name'])
+                t['created'] = model_to_dict(User.objects.get(id=t['created']), fields=['username', 'id'])
+                t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+
+                data.append(t)
+
             return JsonResponse({'tasks': data, 'count': count}, status=200)
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
@@ -136,8 +147,13 @@ class ProjectTaskView(View):
             task = project.task_set.get(id=task_id)
 
             data = model_to_dict(task)
+
+            data['project'] = model_to_dict(project, fields=['id', 'name'])
+            data['created'] = model_to_dict(User.objects.get(id=data['created']), fields=['username', 'id'])
+            data['assigned'] = model_to_dict(User.objects.get(id=data['assigned']), fields=['username', 'id'])
+
             return JsonResponse(data, status=200)
-        except Exception:
+        except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
