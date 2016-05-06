@@ -139,29 +139,29 @@
                         }
                     });
                 },
-                getAllCommentsForTask: function (projectId, taskId, page, perPage) {
+                getAllComments: function (projectId, taskId, page, perPage) {
                     page = page || 1;
                     perPage = perPage || 10;
 
                     return $http({
                         method: 'GET',
-                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/comments',
                         params: {
                             page: page,
-                            perPage: perPage
+                            per_page: perPage
                         }
-                    })
+                    });
                 },
                 getCommentById: function (projectId, taskId, commentId) {
                     return $http({
                         method: 'GET',
-                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments/' + commentId
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/comments/' + commentId
                     });
                 },
                 createComment: function (projectId, taskId, text) {
                     return $http({
                         method: 'POST',
-                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/comments',
                         data: {
                             text: text
                         }
@@ -170,10 +170,16 @@
                 updateComment: function (projectId, taskId, commentId, text) {
                     return $http({
                         method: 'PUT',
-                        url: 'api/projects/' + projectId + '/task/' + taskId + '/comments/' + commentId,
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/comments/' + commentId,
                         data: {
                             text: text
                         }
+                    });
+                },
+                removeComment: function (projectId, taskId, commentId) {
+                    return $http({
+                        method: 'DELETE',
+                        url: 'api/projects/' + projectId + '/tasks/' + taskId + '/comments/' + commentId
                     });
                 }
 

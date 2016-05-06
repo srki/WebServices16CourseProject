@@ -26,3 +26,13 @@ body {
 .edit-modal {
     padding: 10px 20px 20px 20px;
 }
+
+.comment-divider {
+    margin: 5px 15px 5px 0px;
+    height: 1px;
+    background-color: black;
+}
+
+textarea {
+    resize: vertical;
+}

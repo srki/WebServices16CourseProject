@@ -2,6 +2,11 @@
     <h3>Users on the project</h3>
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
+    <div ng-show="itemsCount" class="ta-mid">
+        <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
+                        force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
+    </div>
+
     <ul>
         <li ng-repeat="participant in participants">
             <span class="glyphicon glyphicon-trash clickable" ng-click="removeParticipant(participant.id)"></span>&nbsp;
@@ -17,11 +22,6 @@
             <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
             <div ng-show="noResults">
                 <i class="glyphicon glyphicon-remove"></i> No Results Found
-            </div>
-
-            <div ng-show="itemsCount" class="ta-mid">
-                <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                                force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
             </div>
         </div>
 
