@@ -22,6 +22,7 @@ from WS16_2012.views.project import ProjectsView, ProjectView
 from WS16_2012.views.participants import RemoveParticipantsView, ParticipantsView, AddParticipantsView
 from WS16_2012.views.users import UsersView
 from WS16_2012.views.tasks import TasksView, ProjectTasksView, ProjectTaskView, ProjectTaskHistoryView
+from WS16_2012.views.comments import CommentsView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,6 +34,7 @@ urlpatterns = [
     url(r'^api/projects/(?P<identifier>\d+)/participants/remove', RemoveParticipantsView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/participants', ParticipantsView.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)/history', ProjectTaskHistoryView.as_view()),
+    url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)/comments', CommentsView.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)', ProjectTaskView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/tasks', ProjectTasksView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)', ProjectView.as_view()),

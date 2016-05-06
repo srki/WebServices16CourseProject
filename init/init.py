@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from WS16_2012.models import Project, Task
-
+from WS16_2012.models import Project, Task, Comment
+from datetime import datetime
 
 # PERMISSIONS
 ct = ContentType.objects.get(app_label="auth", model="permission")
@@ -23,11 +23,9 @@ u2.user_permissions.add(p1)
 u2.user_permissions.add(p2)
 u2.save()
 
-
 u3 = User.objects.create_user('q', password='q')
 u3.user_permissions.add(p1)
 u3.save()
-
 
 u4 = User.objects.create_user('w', password='w')
 u4.user_permissions.add(p1)
@@ -37,7 +35,7 @@ u5 = User.objects.create_user('e', password='e')
 u5.user_permissions.add(p1)
 u5.save()
 
-for i in range(ord('a'), ord('z')+1):
+for i in range(ord('a'), ord('z') + 1):
     u = User.objects.create_user("user" + chr(i), password=chr(i))
     u.user_permissions.add(p1)
     u.save()
@@ -51,7 +49,7 @@ p2 = Project(name='Vizlore 2', description='Vidj sto je lep nas ios projekat')
 p2.save()
 
 for i in xrange(10):
-    p = Project(name='Vizlore ' + str(i+3), description='Vidj sto je lep nas ios projekat')
+    p = Project(name='Vizlore ' + str(i + 3), description='Vidj sto je lep nas ios projekat')
     p.save()
 
 # PARTICIPANTS
@@ -80,7 +78,7 @@ for i in xrange(10):
     t.save()
 
 for i in xrange(10):
-    t = Task(name='t' + str(i+10),
+    t = Task(name='t' + str(i + 10),
              status='IN PROGRESS',
              priority='BLOCKER',
              description="Ninja",
@@ -88,9 +86,15 @@ for i in xrange(10):
              created=u2,
              assigned=u1)
     t.save()
+    for j in xrange(10):
+        c = Comment(text='ninja ' + str(j),
+                    date=datetime.now(),
+                    task=t,
+                    created=u2)
+        c.save()
 
 for i in xrange(10):
-    t = Task(name='t' + str(i+20),
+    t = Task(name='t' + str(i + 20),
              status='IN PROGRESS',
              priority='BLOCKER',
              description="Ninja",
@@ -100,3 +104,7 @@ for i in xrange(10):
     t.save()
 
 print 'TASK END'
+
+# COMMENTS
+
+print 'TASK START'

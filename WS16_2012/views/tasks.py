@@ -199,6 +199,8 @@ class ProjectTaskHistoryView(View):
             task = project.task_set.get(id=task_id)
             history = task.taskrevision_set.all().order_by('date')
 
+            count = history.count()
+
             if 'per_page' in request.GET and 'page' in request.GET:
                 per_page = request.GET['per_page']
                 page = request.GET['page']
@@ -207,6 +209,7 @@ class ProjectTaskHistoryView(View):
                 history = paginator.page(page)
 
             data = [model_to_dict(instance) for instance in history]
-            return JsonResponse(data, status=200, safe=False)
+
+            return JsonResponse({'changes': data, 'count': count}, status=200)
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
