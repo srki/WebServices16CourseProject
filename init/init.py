@@ -68,9 +68,10 @@ p2.save()
 print 'TASK START'
 
 for i in xrange(10):
-    t = Task(name='t' + str(i),
-             status='TO DO',
-             priority='CRITICAL',
+    t = Task(code='t' + str(i),
+             subject='t' + str(i),
+             status='IN PROGRESS',
+             priority='BLOCKER',
              description="Ninja",
              project=p1,
              created=u2,
@@ -78,7 +79,8 @@ for i in xrange(10):
     t.save()
 
 for i in xrange(10):
-    t = Task(name='t' + str(i + 10),
+    t = Task(code='t' + str(i + 10),
+             subject='t' + str(i + 10),
              status='IN PROGRESS',
              priority='BLOCKER',
              description="Ninja",
@@ -94,11 +96,12 @@ for i in xrange(10):
         c.save()
 
 for i in xrange(10):
-    t = Task(name='t' + str(i + 20),
+    t = Task(code='t' + str(i + 20),
+             subject='t' + str(i + 20),
              status='IN PROGRESS',
              priority='BLOCKER',
              description="Ninja",
-             project=p2,
+             project=p1,
              created=u2,
              assigned=u1)
     t.save()

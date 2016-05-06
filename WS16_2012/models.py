@@ -7,10 +7,12 @@ class Project(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=2000)
     participants = models.ManyToManyField(User)
+    task_id = models.IntegerField(default=0)
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
+    subject = models.CharField(max_length=30)
     status = models.CharField(max_length=30)
     priority = models.CharField(max_length=30)
     description = models.CharField(max_length=2000)
@@ -29,7 +31,7 @@ class Comment(models.Model):
 
 
 class TaskRevision(models.Model):
-    name = models.CharField(max_length=30)
+    subject = models.CharField(max_length=30)
     status = models.CharField(max_length=30)
     priority = models.CharField(max_length=30)
     description = models.CharField(max_length=2000)

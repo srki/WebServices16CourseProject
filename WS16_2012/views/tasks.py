@@ -90,12 +90,14 @@ class ProjectTasksView(View):
             return JsonResponse({'message': 'Bad request'}, status=400)
 
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
+    @method_decorator(transaction.atomic)
     def post(self, request, identifier):
         try:
             project = Project.objects.get(id=identifier)
-            creator = request.user
+            project.task_id += 1
+            project.save()
 
-            task_count = project.task_set.all().count()
+            creator = request.user
             values = json.loads(request.body)
 
             if values['status'].upper() not in ['TO DO', 'IN PROGRESS', 'VERIFY', 'DONE']:
@@ -104,7 +106,8 @@ class ProjectTasksView(View):
             if values['priority'].upper() not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
                 raise ValueError
 
-            task = Task(name=project.name + '-' + str(task_count),
+            task = Task(code=project.name + '-' + str(project.task_id),
+                        subject=values['subject'],
                         status=values['status'],
                         priority=values['priority'],
                         description=values['description'])
@@ -145,7 +148,7 @@ class ProjectTaskView(View):
             p = Project.objects.get(id=project_id)
             t = p.task_set.get(id=task_id)
 
-            tr = TaskRevision(name=t.name,
+            tr = TaskRevision(subject=t.subject,
                               status=t.status,
                               priority=t.priority,
                               description=t.description,
@@ -162,7 +165,7 @@ class ProjectTaskView(View):
             if values['priority'].upper() not in ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']:
                 raise ValueError
 
-            t.name = values['name']
+            t.subject = values['subject']
             t.status = values['status']
             t.priority = values['priority']
             t.description = values['description']
