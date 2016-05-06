@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from WS16_2012.views.views import RestView, View
 from WS16_2012.models import Project, Comment
 
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
 
@@ -30,7 +31,13 @@ class CommentsView(View):
                 paginator = Paginator(comments, per_page)
                 comments = paginator.page(page)
 
-            data = [model_to_dict(instance) for instance in comments]
+            data = []
+            for instance in comments:
+                c = model_to_dict(instance)
+                c['created'] = model_to_dict(instance.created, fields=['username', 'id'])
+
+                data.append(c)
+
             return JsonResponse({'comments': data, 'count': count}, status=200)
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
