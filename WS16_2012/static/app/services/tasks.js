@@ -10,8 +10,8 @@
             return {
                 getAll: function (page, perPage, priorities, statuses) {
                     var params = {
-                        page: page,
-                        per_page: perPage
+                        page: page || 1,
+                        per_page: perPage || 10
                     };
 
                     if (priorities && priorities.length) {

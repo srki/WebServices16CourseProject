@@ -24,6 +24,15 @@
                     <td class="text-right"><b>Status</b></td>
                     <td class="lp-20 text-capitalize">{{ task.status }}</td>
                 </tr>
+                <tr class="text-1_5x">
+                    <td class="text-right"><b>Author</b></td>
+                    <td class="lp-20">{{ task.created.username }}</td>
+                </tr>
+                <tr class="text-1_5x">
+                    <td class="text-right"><b>Assigned to</b></td>
+                    <td ng-show="task.assigned" class="lp-20">{{ task.assigned.username }}</td>
+                    <td ng-hide="task.assigned" class="lp-20">None</td>
+                </tr>
                 <tr>
                     <td class="text-right"><b>Description</b></td>
                     <td class="lp-20">{{ task.description }}</td>
@@ -58,16 +67,22 @@
                 </select>
             </div>
 
+            <div class="input-group input-container tm-5">
+                <span class="input-group-addon input-description-135" id="description-assigned">Assigned to</span>
+                <input type="text" ng-model="assignedTo" placeholder="Type user name" typeahead-editable="false"
+                       uib-typeahead="user as user.username for user in getParticipants($viewValue)"
+                       class="form-control" aria-describedby="description-assigned" typeahead-min-length="0">
+            </div>
+
             <div class="tm-10" style="height: 34px">
                 <button type="button" class="btn btn-default pull-right" ng-click="update()">
                     <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Update
                 </button>
-                <button type="button" class="btn btn-default pull-right rm-10" ng-click="edit = false">
+                <button type="button" class="btn btn-default pull-right rm-10" ng-click="cancel()">
                     <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
                 </button>
             </div>
         </div>
-
     </div>
 
     <div class="row">

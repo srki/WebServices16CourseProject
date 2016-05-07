@@ -7,6 +7,8 @@
                         items-per-page="perPage" force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
     </div>
 
+    <div ng-if="!participants.length">The are no users on this project.</div>
+
     <ul>
         <li ng-repeat="participant in participants">
             <span class="glyphicon glyphicon-trash clickable" ng-click="removeParticipant(participant.id)"></span>&nbsp;
@@ -17,9 +19,9 @@
     <div class="row">
         <div class="col-md-9">
             <input type="text" ng-model="newParticipant" placeholder="Type user name" typeahead-editable="false"
-                   uib-typeahead="user as user.username for user in getUsers($viewValue)" typeahead-loading="loadingLocations"
+                   uib-typeahead="user as user.username for user in getUsers($viewValue)" typeahead-loading="loadingParticipants"
                    typeahead-no-results="noResults" class="form-control">
-            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            <i ng-show="loadingParticipants" class="glyphicon glyphicon-refresh"></i>
             <div ng-show="noResults">
                 <i class="glyphicon glyphicon-remove"></i> No Results Found
             </div>

@@ -11,13 +11,16 @@
                 $scope.priorities = PRIORITIES;
                 $scope.statuses = STATUSES;
 
+                $scope.subject = "";
                 $scope.description = "";
                 $scope.priority = null;
                 $scope.status = null;
             };
 
             $scope.create = function () {
-                if (!$scope.description) {
+                if (!$scope.subject) {
+                    $scope.alertMessage = "Subject cannot be empty";
+                } else if (!$scope.description) {
                     $scope.alertMessage = "Description cannot be empty";
                 } else if (!$scope.priority) {
                     $scope.alertMessage = "You have to select priority.";
@@ -31,7 +34,7 @@
                     return;
                 }
 
-                Projects.createTask($scope.projectId, $scope.description, $scope.priority, $scope.status).then(
+                Projects.createTask($scope.projectId, $scope.subject, $scope.description, $scope.priority, $scope.status).then(
                     function () {
                         $scope.alertMessage = null;
                         $scope.close(true);

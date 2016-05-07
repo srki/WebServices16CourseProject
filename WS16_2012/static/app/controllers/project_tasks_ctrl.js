@@ -11,7 +11,7 @@
                 $scope.tasks = [];
                 $scope.count = 0;
                 $scope.currentPage = 1;
-                $scope.perPage = 5;
+                $scope.perPage = 10;
 
                 $scope.loadTasks();
             };

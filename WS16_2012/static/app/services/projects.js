@@ -60,6 +60,18 @@
                         }
                     });
                 },
+                getParticipantsByPattern: function (id, pattern, count) {
+                    count = count || 10;
+
+                    return $http({
+                        method: 'GET',
+                        url: 'api/projects/' + id + '/participants',
+                        params: {
+                            pattern: pattern,
+                            count: count
+                        }
+                    });
+                },
                 addParticipant: function (projectId, participantId) {
                     return $http({
                         method: 'POST',
@@ -97,15 +109,22 @@
                         url: 'api/projects/' + projectId + '/tasks/' + taskId
                     });
                 },
-                createTask: function (projectId, description, priority, status) {
+                createTask: function (projectId, subject, description, priority, status, assigned) {
+                    var data = {
+                        subject: subject,
+                        description: description,
+                        priority: priority,
+                        status: status
+                    };
+
+                    if (assigned) {
+                        data.assigned = assigned;
+                    }
+
                     return $http({
                         method: 'POST',
                         url: 'api/projects/' + projectId + '/tasks',
-                        data: {
-                            description: description,
-                            priority: priority,
-                            status: status
-                        }
+                        data: data
                     });
                 },
                 removeTask: function (projectId, taskId) {
@@ -114,15 +133,16 @@
                         url: 'api/projects/' + projectId + '/tasks/' + taskId
                     });
                 },
-                editTask: function (projectId, taskId, name, description, status, priority) {
+                updateTask: function (projectId, taskId, subject, description, status, priority, assigned) {
                     return $http({
                         method: 'PUT',
                         url: 'api/projects/' + projectId + '/tasks/' + taskId,
                         data: {
-                            name: name,
+                            subject: subject,
                             description: description,
                             status: status,
-                            priority: priority
+                            priority: priority,
+                            assigned: assigned
                         }
                     });
                 },

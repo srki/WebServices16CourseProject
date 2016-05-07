@@ -38,6 +38,18 @@
             };
 
             $scope.update = function () {
+                if (!$scope.name) {
+                    $scope.alertMessage = "Name cannot be empty.";
+                } else if (!$scope.description) {
+                    $scope.alertMessage = "Description cannot be empty.";
+                } else {
+                    $scope.alertMessage = null;
+                }
+
+                if ($scope.alertMessage) {
+                    return;
+                }
+
                 Projects.update($scope.projectId, $scope.name, $scope.description).then(
                     function (response) {
                         $scope.edit = false;
@@ -49,6 +61,11 @@
                         $scope.alertMessage = "Error: " + response.data.message;
                     }
                 );
+            };
+
+            $scope.cancel = function () {
+                $scope.edit = false;
+                $scope.alertMessage = null;
             };
 
             init();

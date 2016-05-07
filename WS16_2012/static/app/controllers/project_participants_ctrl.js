@@ -55,6 +55,7 @@
                 Projects.addParticipant($scope.projectId, $scope.newParticipant.id).then(
                     function () {
                         $scope.loadParticipants();
+                        $scope.newParticipant = null;
                         $scope.alertMessage = null;
                     },
                     function (response) {

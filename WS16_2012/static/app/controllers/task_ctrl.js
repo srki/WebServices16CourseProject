@@ -7,7 +7,7 @@
 
     angular.module('app.TaskCtrl', [])
         .controller('TaskCtrl', function ($scope, $filter, $location, $routeParams, Auth, Projects, PRIORITIES, STATUSES) {
-            var initEditFields = function () {
+            var setEditFields = function () {
                     $scope.task.priority = $filter('lowercase')($scope.task.priority);
                     $scope.task.status = $filter('lowercase')($scope.task.status);
 
@@ -16,6 +16,7 @@
                     $scope.description = $scope.task.description;
                     $scope.priority = $scope.task.priority;
                     $scope.status = $scope.task.status;
+                    $scope.assignedTo = $scope.task.assigned;
                 },
                 init = function () {
                     Auth.isLogged().then(
@@ -40,11 +41,12 @@
                     $scope.description = "";
                     $scope.priority = "";
                     $scope.status = "";
+                    $scope.assignedTo = "";
 
                     Projects.getTaskById($scope.projectId, $scope.taskId).then(
                         function (response) {
                             $scope.task = response.data;
-                            initEditFields($scope.task);
+                            setEditFields($scope.task);
                         },
                         function (response) {
                             $scope.alertMessage = "Error: " + response.data.message;
@@ -52,8 +54,45 @@
                     );
                 };
 
-            $scope.update = function () {
+            $scope.getParticipants = function (pattern) {
+                return Projects.getParticipantsByPattern($scope.projectId, pattern, 5).then(function (response) {
+                    return response.data.users;
+                });
+            };
 
+            $scope.update = function () {
+                if (!$scope.subject) {
+                    $scope.alertMessage = "Subject cannot be empty";
+                } else if (!$scope.description) {
+                    $scope.alertMessage = "Description cannot be empty";
+                } else if (!$scope.priority) {
+                    $scope.alertMessage = "You have to select priority.";
+                } else if (!$scope.status) {
+                    $scope.alertMessage = "You have to select status.";
+                } else {
+                    $scope.alertMessage = null;
+                }
+
+                if ($scope.alertMessage) {
+                    return;
+                }
+
+                Projects.updateTask($scope.projectId, $scope.taskId, $scope.subject, $scope.description,
+                    $scope.status, $scope.priority, $scope.assignedTo ? $scope.assignedTo.id : null).then(
+                    function (response) {
+                        $scope.task = response.data;
+                        $scope.cancel();
+                    },
+                    function (response) {
+                        $scope.alertMessage = "Error: " + response.data.message;
+                    }
+                );
+            };
+
+            $scope.cancel = function () {
+                setEditFields();
+                $scope.edit = false;
+                $scope.alertMessage = null;
             };
 
             init();
