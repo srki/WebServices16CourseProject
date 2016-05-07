@@ -15,14 +15,14 @@
     <div class="input-group input-container tm-5">
         <span class="input-group-addon input-description-135" id="description-edit">Priority</span>
         <select class="form-control" ng-model="priority">
-            <option ng-repeat="priority in priorities">{{ priority }}</option>
+            <option ng-repeat="priority in priorities" class="text-capitalize">{{ priority }}</option>
         </select>
     </div>
 
     <div class="input-group input-container tm-5">
         <span class="input-group-addon input-description-135" id="description-edit">Status</span>
         <select class="form-control" ng-model="status">
-            <option ng-repeat="status in statuses">{{ status }}</option>
+            <option ng-repeat="status in statuses" class="text-capitalize">{{ status }}</option>
         </select>
     </div>
 

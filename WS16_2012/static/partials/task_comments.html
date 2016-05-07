@@ -12,11 +12,12 @@
                 <br/>
                 <span class="lp-10">{{ comment.date | date:'medium' }}</span>
             </td>
-            <td class="ta-mid" style="vertical-align: middle;">
+            <td class="ta-mid" style="vertical-align: middle;" ng-show="display == 'admin' || comment.created.id == userId">
                 <span class="glyphicon glyphicon-edit clickable" ng-click="setEdit(comment.id, comment.text)"></span>
                 &nbsp;
                 <span class="glyphicon glyphicon-trash clickable" ng-click="remove(comment.id)"></span>
             </td>
+            <td ng-hide="display == 'admin' || comment.created.id == userId">&nbsp;</td>
         </tr>
     </table>
 

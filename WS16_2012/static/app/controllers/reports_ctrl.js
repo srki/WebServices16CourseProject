@@ -8,7 +8,7 @@
     "use strict";
 
     angular.module('app.ReportsCtrl', [])
-        .controller('ReportsCtrl', function ($scope, $location, $filter, $routeParams, Auth, Reports, Projects, REPORT_TYPES) {
+        .controller('ReportsCtrl', function ($scope, $location, $routeParams, Auth, Reports, Projects, REPORT_TYPES) {
             var init = function () {
                 Auth.isLogged().then(
                     function (response) {
@@ -51,13 +51,7 @@
 
             $scope.createChart = function (labels, datasets, type) {
                 type = type || 'bar';
-                datasets[0].backgroundColor = [
-                    "#FF6384",
-                    "#4BC0C0",
-                    "#FFCE56",
-                    "#E7E9ED",
-                    "#36A2EB"
-                ];
+                datasets[0].backgroundColor = ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"];
 
                 if ($scope.chart) {
                     $scope.chart.destroy();

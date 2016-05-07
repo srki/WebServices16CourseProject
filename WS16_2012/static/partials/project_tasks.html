@@ -22,9 +22,10 @@
         <tr ng-repeat="task in tasks" class="clickable" ng-click="open(task.id)">
             <td>{{ task.code }}</td>
             <td>{{ task.subject }}</td>
-            <td class="text-lowercase">{{ task.priority | lowercase }}</td>
-            <td class="text-lowercase">{{ task.status | lowercase }}</td>
-            <td class="table-cell-align ta-mid clickable" ng-click="remove(task.id); $event.stopPropagation();">
+            <td class="text-capitalize">{{ task.priority | lowercase }}</td>
+            <td class="text-capitalize">{{ task.status | lowercase }}</td>
+            <td ng-show="display == 'admin'" class="table-cell-align ta-mid clickable"
+                ng-click="remove(task.id); $event.stopPropagation();">
                 <span class="glyphicon glyphicon-trash"></span>
             </td>
         </tr>
