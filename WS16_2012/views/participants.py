@@ -73,6 +73,13 @@ class ParticipantsView(View):
             PrivilegeCheck.can_access_project(project, request.user)
 
             participants = project.participants.all()
+
+            if 'count' in request.GET and 'pattern' in request.GET:
+                count = request.GET['count']
+                pattern = request.GET['pattern']
+
+                participants = participants.filter(username__contains=pattern)[:count]
+
             count = participants.count()
 
             if 'per_page' in request.GET and 'page' in request.GET:
