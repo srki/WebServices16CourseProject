@@ -3,6 +3,7 @@ angular.module('app.services', [
     'app.Auth',
     'app.Projects',
     'app.Tasks',
-    'app.Users'
+    'app.Users',
+    'app.Reports'
 ]);
 
