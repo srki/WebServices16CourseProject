@@ -1,6 +1,7 @@
 /**
  * Created by Srđan on 6.5.2016..
  */
+/*global angular*/
 (function (angular) {
     "use strict";
 
@@ -9,9 +10,9 @@
             var init = function () {
                 $scope.commentText = null;
                 $scope.comments = [];
+                $scope.editId = null;
                 $scope.count = 0;
                 $scope.currentPage = 1;
-                $scope.editId = null;
                 $scope.perPage = 5;
 
                 $scope.loadComments();
@@ -24,7 +25,7 @@
                         $scope.count = response.data.count;
 
                         if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
                         }
 
                         $scope.alertMessage = null;

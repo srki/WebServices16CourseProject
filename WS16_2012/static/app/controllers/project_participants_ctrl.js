@@ -30,7 +30,8 @@
                         $scope.count = response.data.count;
 
                         if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
+                            ;
                         }
 
                         $scope.alertMessage = null;
@@ -55,6 +56,7 @@
                 Projects.addParticipant($scope.projectId, $scope.newParticipant.id).then(
                     function () {
                         $scope.loadParticipants();
+                        $scope.newParticipant = null;
                         $scope.alertMessage = null;
                     },
                     function (response) {

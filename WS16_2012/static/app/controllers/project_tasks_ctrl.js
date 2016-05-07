@@ -11,7 +11,7 @@
                 $scope.tasks = [];
                 $scope.count = 0;
                 $scope.currentPage = 1;
-                $scope.perPage = 5;
+                $scope.perPage = 10;
 
                 $scope.loadTasks();
             };
@@ -23,7 +23,7 @@
                         $scope.count = response.data.count;
 
                         if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage);
+                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
                         }
 
                         $scope.alertMessage = null;
@@ -52,6 +52,18 @@
 
             $scope.open = function (id) {
                 $location.path('/projects/' + $scope.projectId + '/tasks/' + id);
+            };
+
+            $scope.remove = function (id) {
+                Projects.removeTask($scope.projectId, id).then(
+                    function () {
+                        $scope.loadTasks();
+                        $scope.alertMessage = null;
+                    },
+                    function (response) {
+                        $scope.alertMessage = 'Error: ' + response.data.message;
+                    }
+                );
             };
 
             init();

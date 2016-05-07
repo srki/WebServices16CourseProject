@@ -3,7 +3,7 @@
 
     <div ng-show="count" class="ta-mid">
         <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        force-ellipses="true" ng-change="loadComments()" items-per-page="5"></uib-pagination>
+                        force-ellipses="true" ng-change="loadComments()" items-per-page="perPage"></uib-pagination>
     </div>
     <table class="table table-striped table-hover">
         <tr ng-repeat="comment in comments">

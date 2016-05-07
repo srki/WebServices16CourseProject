@@ -16,6 +16,8 @@
             $scope.create = function () {
                 if (!$scope.name) {
                     $scope.alertMessage = "Name cannot be empty.";
+                } else if (!$scope.description) {
+                    $scope.alertMessage = "Description cannot be empty.";
                 } else {
                     $scope.alertMessage = null;
                 }
