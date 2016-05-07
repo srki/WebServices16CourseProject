@@ -75,7 +75,8 @@ for i in xrange(10):
              description="Ninja",
              project=p1,
              created=u2,
-             assigned=u1)
+             assigned=u1,
+             date_created=datetime.now())
     t.save()
 
 for i in xrange(10):
@@ -86,7 +87,8 @@ for i in xrange(10):
              description="Ninja",
              project=p1,
              created=u2,
-             assigned=u1)
+             assigned=u1,
+             date_created=datetime.now())
     t.save()
     for j in xrange(10):
         c = Comment(text='ninja ' + str(j),
@@ -103,7 +105,8 @@ for i in xrange(10):
              description="Ninja",
              project=p1,
              created=u2,
-             assigned=u1)
+             assigned=u1,
+             date_created=datetime.now())
     t.save()
 
 print 'TASK END'

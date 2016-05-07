@@ -18,7 +18,7 @@ class Task(models.Model):
     description = models.CharField(max_length=2000)
 
     date_created = models.DateField()
-    date_finished = models.DateField()
+    date_finished = models.DateField(null=True)
 
     project = models.ForeignKey(Project)
     created = models.ForeignKey(User, related_name='created')

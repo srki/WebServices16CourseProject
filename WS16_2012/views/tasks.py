@@ -138,7 +138,8 @@ class ProjectTasksView(View):
                         subject=values['subject'],
                         status=values['status'],
                         priority=values['priority'],
-                        description=values['description'])
+                        description=values['description'],
+                        date_created=datetime.now())
 
             task.project = project
             task.created = creator
@@ -211,7 +212,10 @@ class ProjectTaskView(View):
             t.priority = values['priority']
             t.description = values['description']
 
-            if 'assigned' in values:
+            if t.status == 'DONE':
+                t.date_finished = datetime.now()
+
+            if 'assigned' in values and t.assigned is not None:
                 t.assigned = User.objects.get(id=values['assigned'])
             else:
                 t.assigned = None
