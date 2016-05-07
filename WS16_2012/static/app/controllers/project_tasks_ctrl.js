@@ -54,6 +54,18 @@
                 $location.path('/projects/' + $scope.projectId + '/tasks/' + id);
             };
 
+            $scope.remove = function (id) {
+                Projects.removeTask($scope.projectId, id).then(
+                    function () {
+                        $scope.loadTasks();
+                        $scope.alertMessage = null;
+                    },
+                    function (response) {
+                        $scope.alertMessage = 'Error: ' + response.data.message;
+                    }
+                );
+            };
+
             init();
         });
 }(angular));

@@ -24,11 +24,11 @@
                     <td class="text-right"><b>Status</b></td>
                     <td class="lp-20 text-capitalize">{{ task.status }}</td>
                 </tr>
-                <tr class="text-1_5x">
+                <tr>
                     <td class="text-right"><b>Author</b></td>
                     <td class="lp-20">{{ task.created.username }}</td>
                 </tr>
-                <tr class="text-1_5x">
+                <tr>
                     <td class="text-right"><b>Assigned to</b></td>
                     <td ng-show="task.assigned" class="lp-20">{{ task.assigned.username }}</td>
                     <td ng-hide="task.assigned" class="lp-20">None</td>

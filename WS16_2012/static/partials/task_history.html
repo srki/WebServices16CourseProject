@@ -1,4 +1,27 @@
 <div id="History" ng-controller="TaskHistoryCtrl">
     <h3>History</h3>
-    {{ history }}
+
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <div ng-if="!changes.length">
+        There is no history.
+    </div>
+
+    <table class="table table-striped table-hover">
+        <tr ng-repeat="change in changes">
+            <td>
+                <i>Modified: {{ change.date | date:'medium' }}</i>
+                <br/>
+                Subject:&nbsp;<b>{{ change.subject }}</b>
+                <br/>
+                Priority:&nbsp;<b class="text-capitalize">{{ change.priority | lowercase }}</b>
+                <br/>
+                Status:&nbsp;<b class="text-capitalize">{{ change.status | lowercase }}</b>
+                <br/>
+                Assigned to:<b>{{ change.assigned.username }}</b>
+                <br/>
+                {{ change.description }}
+            </td>
+        </tr>
+    </table>
 </div>

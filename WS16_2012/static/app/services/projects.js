@@ -129,7 +129,7 @@
                 },
                 removeTask: function (projectId, taskId) {
                     return $http({
-                        method: 'POST',
+                        method: 'DELETE',
                         url: 'api/projects/' + projectId + '/tasks/' + taskId
                     });
                 },
@@ -155,7 +155,7 @@
                         url: 'api/projects/' + projectId + '/tasks/' + taskId + '/history',
                         params: {
                             page: page,
-                            perPage: perPage
+                            per_page: perPage
                         }
                     });
                 },
