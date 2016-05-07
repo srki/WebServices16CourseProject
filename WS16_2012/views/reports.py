@@ -1,10 +1,10 @@
-from WS16_2012.views.views import View
-from WS16_2012.models import Project
-
 from django.contrib.auth.decorators import permission_required
-from django.utils.decorators import method_decorator
-from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+
+from WS16_2012.models import Project
+from WS16_2012.views.views import View
 
 
 class AssignedTasksReportView(View):
@@ -45,14 +45,14 @@ class CompletedTasksReportView(View):
 
             data = []
             for u in p.participants.all():
-                asg_no = float(p.task_set.filter(status='DONE').all().count())
-                cmp_no = float(u.assigned.filter(status='DONE').filter(project=p).all().count())
+                asg_no = float(p.task_set.filter(status='DONE').count())
+                cmp_no = float(u.assigned.filter(status='DONE').filter(project=p).count())
 
                 if asg_no != 0:
                     data.append({"username": u.username, "percentage": (cmp_no/asg_no)})
+                    all_zero = False
                 else:
                     data.append({"username": u.username, "percentage": 0})
-                    all_zero = False
 
             if all_zero:
                 return JsonResponse({"message": "No data"}, status=402)

@@ -11,12 +11,13 @@
 
     <table class="table table-striped table-hover table-bordered">
         <tr>
-            <th></th>
+            <th ng-show="display == 'admin'"></th>
             <th class="table-cell-align header-sm">Name</th>
             <th class="table-cell-align">Description</th>
         </tr>
         <tr class="clickable" ng-repeat="project in projects" ng-click="open(project.id)">
-            <td ng-click="showReports(project.id); $event.stopPropagation();" class="ta-mid" style="width: 30px">
+            <td ng-show="display == 'admin'" ng-click="showReports(project.id); $event.stopPropagation();" class="ta-mid"
+                style="width: 30px">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </td>
             <td>{{ project.name }}</td>
