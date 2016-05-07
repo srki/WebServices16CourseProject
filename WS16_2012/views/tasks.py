@@ -211,11 +211,14 @@ class ProjectTaskView(View):
             t.priority = values['priority']
             t.description = values['description']
 
-            t.assigned = User.objects.get(id=values['assigned'])
+            if 'assigned' in values:
+                t.assigned = User.objects.get(id=values['assigned'])
+            else:
+                t.assigned = None
 
             t.save()
 
-            return JsonResponse({}, status=200)
+            return JsonResponse(model_to_dict(t), status=200)
 
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
@@ -255,6 +258,17 @@ class ProjectTaskHistoryView(View):
 
                 page = min(int(page), paginator.num_pages)
                 history = paginator.page(page)
+
+            data = []
+            for h in history:
+                temp = model_to_dict(h)
+
+                try:
+                    temp['assigned'] = model_to_dict(User.objects.get(id=temp['assigned']), fields=['username', 'id'])
+                except ObjectDoesNotExist:
+                    temp['assigned'] = None
+
+                data.append(temp)
 
             data = [model_to_dict(instance) for instance in history]
 
