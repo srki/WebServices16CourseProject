@@ -15,6 +15,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 
 from django.db import transaction
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class TasksView(RestView):
@@ -64,7 +65,11 @@ class TasksView(RestView):
             t = model_to_dict(instance)
             t['project'] = model_to_dict(instance.project, fields=['id', 'name'])
             t['created'] = model_to_dict(User.objects.get(id=t['created']), fields=['username', 'id'])
-            t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+
+            try:
+                t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+            except ObjectDoesNotExist:
+                t['assigned'] = None
 
             data.append(t)
 
@@ -98,7 +103,11 @@ class ProjectTasksView(View):
                 t = model_to_dict(instance)
                 t['project'] = model_to_dict(instance.project, fields=['id', 'name'])
                 t['created'] = model_to_dict(User.objects.get(id=t['created']), fields=['username', 'id'])
-                t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+
+                try:
+                    t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+                except ObjectDoesNotExist:
+                    t['assigned'] = None
 
                 data.append(t)
 
@@ -160,7 +169,11 @@ class ProjectTaskView(View):
 
             data['project'] = model_to_dict(project, fields=['id', 'name'])
             data['created'] = model_to_dict(User.objects.get(id=data['created']), fields=['username', 'id'])
-            data['assigned'] = model_to_dict(User.objects.get(id=data['assigned']), fields=['username', 'id'])
+
+            try:
+                data['assigned'] = model_to_dict(User.objects.get(id=data['assigned']), fields=['username', 'id'])
+            except ObjectDoesNotExist:
+                data['assigned'] = None
 
             return JsonResponse(data, status=200)
         except Exception as e:
