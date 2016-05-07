@@ -23,6 +23,7 @@ from WS16_2012.views.participants import RemoveParticipantsView, ParticipantsVie
 from WS16_2012.views.users import UsersView
 from WS16_2012.views.tasks import TasksView, ProjectTasksView, ProjectTaskView, ProjectTaskHistoryView
 from WS16_2012.views.comments import CommentsView, CommentView
+from WS16_2012.views.reports import TasksCreatedView, TasksDoneView, TasksDoneByUser
 from WS16_2012.views.reports import AssignedTasksReportView, CompletedTasksReportView
 
 urlpatterns = [
@@ -38,8 +39,11 @@ urlpatterns = [
     url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)/comments/(?P<comment_id>\d+)', CommentView.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)/comments', CommentsView.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/tasks/(?P<task_id>\d+)', ProjectTaskView.as_view()),
+    url(r'^api/projects/(?P<project_id>\d+)/reports/users/(?P<user_id>\d+)/done', TasksDoneByUser.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/reports/assigned', AssignedTasksReportView.as_view()),
     url(r'^api/projects/(?P<project_id>\d+)/reports/completed', CompletedTasksReportView.as_view()),
+    url(r'^api/projects/(?P<project_id>\d+)/reports/created', TasksDoneView.as_view()),
+    url(r'^api/projects/(?P<project_id>\d+)/reports/done', TasksCreatedView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)/tasks', ProjectTasksView.as_view()),
     url(r'^api/projects/(?P<identifier>\d+)', ProjectView.as_view()),
     url(r'^api/projects', ProjectsView.as_view()),

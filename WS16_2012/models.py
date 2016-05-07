@@ -17,8 +17,8 @@ class Task(models.Model):
     priority = models.CharField(max_length=30)
     description = models.CharField(max_length=2000)
 
-    date_created = models.DateField()
-    date_finished = models.DateField(null=True)
+    date_created = models.DateTimeField()
+    date_finished = models.DateTimeField(null=True)
 
     project = models.ForeignKey(Project)
     created = models.ForeignKey(User, related_name='created')
