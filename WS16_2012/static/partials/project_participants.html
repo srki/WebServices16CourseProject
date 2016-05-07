@@ -2,7 +2,7 @@
     <h3>Users on the project</h3>
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
-    <div ng-show="itemsCount" class="ta-mid">
+    <div ng-show="count" class="ta-mid">
         <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
                         items-per-page="perPage" force-ellipses="true" ng-change="loadParticipants()"></uib-pagination>
     </div>
