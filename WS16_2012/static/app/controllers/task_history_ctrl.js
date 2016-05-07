@@ -12,7 +12,7 @@
                 $scope.changes = [];
                 $scope.count = 0;
                 $scope.currentPage = 1;
-                $scope.perPage = 5;
+                $scope.perPage = 3;
 
                 $scope.loadHistory();
                 $scope.$watch('task', $scope.loadHistory);

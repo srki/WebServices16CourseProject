@@ -89,6 +89,15 @@
                 );
             };
 
+            $scope.revert = function (change) {
+                $scope.edit = true;
+                $scope.subject = change.subject;
+                $scope.description = change.description;
+                $scope.priority = $filter('lowercase')(change.priority);
+                $scope.status = $filter('lowercase')(change.status);
+                $scope.assignedTo = change.assigned;
+            };
+
             $scope.cancel = function () {
                 setEditFields();
                 $scope.edit = false;
