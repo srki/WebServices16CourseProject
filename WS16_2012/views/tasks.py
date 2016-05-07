@@ -8,7 +8,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView, View
+from WS16_2012.views.views import RestView, View, PrivilegeCheck
 from WS16_2012.models import Task, TaskRevision, Project
 
 from django.core.paginator import Paginator
@@ -38,7 +38,7 @@ class TasksView(RestView):
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def rest_get(self, request):
 
-        tasks = Task.objects.all()
+        tasks = Task.objects.all().filter(assigned=request.user)
 
         if 'status' in request.GET:
             stats = self.get_stats(request.GET['status'])
@@ -56,7 +56,7 @@ class TasksView(RestView):
 
             paginator = Paginator(tasks, per_page)
 
-            page = min(page, paginator.num_pages)
+            page = min(int(page), paginator.num_pages)
             tasks = paginator.page(page)
 
         data = []
@@ -78,8 +78,10 @@ class ProjectTasksView(View):
 
         try:
             project = Project.objects.get(id=identifier)
-            tasks = project.task_set.all()
 
+            PrivilegeCheck.can_access_project(project, request.user)
+
+            tasks = project.task_set.all()
             count = tasks.count()
 
             if 'per_page' in request.GET and 'page' in request.GET:
@@ -87,6 +89,8 @@ class ProjectTasksView(View):
                 page = request.GET['page']
 
                 paginator = Paginator(tasks, per_page)
+
+                page = min(int(page), paginator.num_pages)
                 tasks = paginator.page(page)
 
             data = []
@@ -107,6 +111,8 @@ class ProjectTasksView(View):
     def post(self, request, identifier):
         try:
             project = Project.objects.get(id=identifier)
+            PrivilegeCheck.can_access_project(project, request.user)
+
             project.task_id += 1
             project.save()
 
@@ -146,6 +152,8 @@ class ProjectTaskView(View):
 
         try:
             project = Project.objects.get(id=project_id)
+            PrivilegeCheck.can_access_project(project, request.user)
+
             task = project.task_set.get(id=task_id)
 
             data = model_to_dict(task)
@@ -164,6 +172,8 @@ class ProjectTaskView(View):
 
         try:
             p = Project.objects.get(id=project_id)
+            PrivilegeCheck.can_access_project(p, request.user)
+
             t = p.task_set.get(id=task_id)
 
             tr = TaskRevision(subject=t.subject,
@@ -217,6 +227,8 @@ class ProjectTaskHistoryView(View):
 
         try:
             project = Project.objects.get(id=project_id)
+            PrivilegeCheck.can_access_project(project, request.user)
+
             task = project.task_set.get(id=task_id)
             history = task.taskrevision_set.all().order_by('date')
 

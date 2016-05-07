@@ -69,7 +69,10 @@ class ParticipantsView(View):
     def get(self, request, identifier):
 
         try:
-            participants = Project.objects.get(id=int(identifier)).participants.all()
+            project = Project.objects.get(id=int(identifier))
+            PrivilegeCheck.can_access_project(project, request.user)
+
+            participants = project.participants.all()
             count = participants.count()
 
             if 'per_page' in request.GET and 'page' in request.GET:

@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView, View
+from WS16_2012.views.views import RestView, View, PrivilegeCheck
 from WS16_2012.models import Project
 
 from django.core.paginator import Paginator
@@ -46,6 +46,7 @@ class ProjectView(View):
     @method_decorator(permission_required(perm='auth.user', raise_exception=True))
     def get(self, request, identifier):
         project = Project.objects.get(id=int(identifier))
+        PrivilegeCheck.can_access_project(project, request.user)
 
         if project:
             return JsonResponse(model_to_dict(project, exclude=['participants']), status=200)
