@@ -89,6 +89,10 @@
                 );
             };
 
+            $scope.backToProject = function () {
+                $location.path('/projects/' + $scope.projectId);
+            };
+
             $scope.revert = function (change) {
                 $scope.edit = true;
                 $scope.subject = change.subject;

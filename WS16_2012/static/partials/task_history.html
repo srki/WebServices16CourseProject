@@ -23,7 +23,7 @@
                 <br/>
                 Status:&nbsp;<b class="text-capitalize">{{ change.status | lowercase }}</b>
                 <br/>
-                Assigned to:<b>{{ change.assigned.username }}</b>
+                Assigned to:&nbsp;<b ng-show="change.assigned">{{ change.assigned.username }}</b><b ng-hide="change.assigned">None</b>
                 <br/>
                 {{ change.description }}
             </td>

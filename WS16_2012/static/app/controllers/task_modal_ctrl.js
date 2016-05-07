@@ -15,6 +15,7 @@
                 $scope.description = "";
                 $scope.priority = null;
                 $scope.status = null;
+                $scope.assignedTo = null;
             };
 
             $scope.create = function () {
@@ -34,7 +35,8 @@
                     return;
                 }
 
-                Projects.createTask($scope.projectId, $scope.subject, $scope.description, $scope.priority, $scope.status).then(
+                Projects.createTask($scope.projectId, $scope.subject, $scope.description, $scope.priority, $scope.status,
+                    $scope.assignedTo ? $scope.assignedTo.id : null).then(
                     function () {
                         $scope.alertMessage = null;
                         $scope.close(true);
@@ -43,6 +45,12 @@
                         $scope.alertMessage = "Error: " + response.data.message;
                     }
                 );
+            };
+
+            $scope.getParticipants = function (pattern) {
+                return Projects.getParticipantsByPattern($scope.projectId, pattern, 5).then(function (response) {
+                    return response.data.users;
+                });
             };
 
             $scope.close = function (refresh) {

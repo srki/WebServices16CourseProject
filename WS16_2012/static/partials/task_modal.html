@@ -26,6 +26,13 @@
         </select>
     </div>
 
+    <div class="input-group input-container tm-5">
+        <span class="input-group-addon input-description-135" id="description-assigned">Assigned to</span>
+        <input type="text" ng-model="assignedTo" placeholder="Type user name" typeahead-editable="false"
+               uib-typeahead="user as user.username for user in getParticipants($viewValue)"
+               class="form-control" aria-describedby="description-assigned" typeahead-min-length="0">
+    </div>
+
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <div class="tm-10" style="height: 34px">
