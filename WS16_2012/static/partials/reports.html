@@ -1,0 +1,31 @@
+<div id="Reports" class="plr-50 ptb-20">
+    <h2>Reports</h2>
+    <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
+
+    <div>
+        <h3>Select report type: </h3>
+        <oi-select oi-options="type for type in types" ng-model="type" style="width: 300px;"></oi-select>
+    </div>
+
+    <div ng-show="selectUser">
+        <h3>Select user type: </h3>
+
+        <input type="text" style="width: 300px" ng-model="user" placeholder="Type user name" typeahead-editable="false"
+               uib-typeahead="user as user.username for user in getParticipants($viewValue)" typeahead-loading="loadingParticipants"
+               typeahead-no-results="noResults" class="form-control" typeahead-min-length="0">
+        <i ng-show="loadingParticipants" class="glyphicon glyphicon-refresh"></i>
+        <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+        </div>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-default bm-20 tm-20" ng-click="update()">
+            <span class="glyphicon glyphicon-refresh"></span>&nbsp;Update
+        </button>
+    </div>
+
+    <canvas id="chart" width="400" height="200"></canvas>
+
+
+</div>

@@ -23,7 +23,7 @@
             <th class="table-cell-align header-md">Status</th>
         </tr>
         <tr ng-repeat="task in tasks" class="clickable" ng-click="openTask(task.project.id, task.id)">
-            <td class="clickable" ng-click="openProject(task.project.id)">{{ task.project.name }}</td>
+            <td class="clickable" ng-click="openProject(task.project.id); $event.stopPropagation();">{{ task.project.name }}</td>
             <td>{{ task.code }}</td>
             <td>{{ task.subject }}</td>
             <td>{{ task.description }}</td>

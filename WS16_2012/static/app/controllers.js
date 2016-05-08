@@ -12,5 +12,6 @@ angular.module('app.controllers', [
     'app.TaskCtrl',
     'app.TaskModalCtrl',
     'app.TaskCommentsCtrl',
-    'app.TaskHistoryCtrl'
+    'app.TaskHistoryCtrl',
+    'app.ReportsCtrl'
 ]);

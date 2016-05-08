@@ -31,7 +31,6 @@
 
                         if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
                             $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
-                            ;
                         }
 
                         $scope.alertMessage = null;
