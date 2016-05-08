@@ -22,7 +22,7 @@ class AssignedTasksReportView(View):
 
             data = []
             for u in p.participants.all():
-                asg_no = float(u.assigned.all().count())
+                asg_no = float(u.assigned.all().filter(project=p).count())
                 if task_no != 0:
                     data.append({"username": u.username, "percentage": (asg_no/task_no)})
                 else:
