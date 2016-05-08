@@ -222,7 +222,14 @@ class ProjectTaskView(View):
 
             t.save()
 
-            return JsonResponse(model_to_dict(t), status=200)
+            t = model_to_dict(t)
+
+            try:
+                t['assigned'] = model_to_dict(User.objects.get(id=t['assigned']), fields=['username', 'id'])
+            except ObjectDoesNotExist:
+                t['assigned'] = None
+
+            return JsonResponse(t, status=200)
 
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
@@ -273,8 +280,6 @@ class ProjectTaskHistoryView(View):
                     temp['assigned'] = None
 
                 data.append(temp)
-
-            data = [model_to_dict(instance) for instance in history]
 
             return JsonResponse({'changes': data, 'count': count}, status=200)
         except Exception as e:

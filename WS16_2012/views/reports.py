@@ -17,6 +17,9 @@ class AssignedTasksReportView(View):
 
             task_no = float(p.task_set.count())
 
+            if task_no == 0:
+                return JsonResponse({"message": "No data"}, status=402)
+
             data = []
             for u in p.participants.all():
                 asg_no = float(u.assigned.all().count())
@@ -38,6 +41,8 @@ class CompletedTasksReportView(View):
         try:
             p = Project.objects.get(id=project_id)
 
+            all_zero = True
+
             data = []
             for u in p.participants.all():
                 asg_no = float(u.assigned.all().count())
@@ -47,6 +52,10 @@ class CompletedTasksReportView(View):
                     data.append({"username": u.username, "percentage": (cmp_no/asg_no)})
                 else:
                     data.append({"username": u.username, "percentage": 0})
+                    all_zero = False
+
+            if all_zero:
+                return JsonResponse({"message": "No data"}, status=402)
 
             return JsonResponse(data, status=200, safe=False)
         except Exception as e:
