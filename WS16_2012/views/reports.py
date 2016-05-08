@@ -43,7 +43,7 @@ class CompletedTasksReportView(View):
 
             asg_no = float(p.task_set.filter(status='DONE').count())
 
-            if asg_no:
+            if asg_no == 0:
                 return JsonResponse({"message": "No data"}, status=402)
 
             data = []
