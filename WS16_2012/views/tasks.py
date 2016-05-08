@@ -136,8 +136,8 @@ class ProjectTasksView(View):
 
             task = Task(code=project.name + '-' + str(project.task_id),
                         subject=values['subject'],
-                        status=values['status'],
-                        priority=values['priority'],
+                        status=values['status'].upper(),
+                        priority=values['priority'].upper(),
                         description=values['description'],
                         date_created=datetime.now())
 
@@ -208,8 +208,8 @@ class ProjectTaskView(View):
                 raise ValueError
 
             t.subject = values['subject']
-            t.status = values['status']
-            t.priority = values['priority']
+            t.status = values['status'].upper()
+            t.priority = values['priority'].upper()
             t.description = values['description']
 
             if t.status == 'DONE':
