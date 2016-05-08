@@ -45,8 +45,8 @@ class CompletedTasksReportView(View):
 
             data = []
             for u in p.participants.all():
-                asg_no = float(u.assigned.all().count())
-                cmp_no = float(u.assigned.filter(status='DONE').all().count())
+                asg_no = float(p.task_set.filter(status='DONE').all().count())
+                cmp_no = float(u.assigned.filter(status='DONE').filter(project=p).all().count())
 
                 if asg_no != 0:
                     data.append({"username": u.username, "percentage": (cmp_no/asg_no)})
