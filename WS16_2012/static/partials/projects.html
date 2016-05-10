@@ -1,7 +1,7 @@
 <div id="Projects">
     <div>
         <h2>Projects&nbsp;
-            <button type="button" class="btn btn-default" ng-click="create()">
+            <button type="button" class="btn btn-default" ng-click="create()" ng-show="display == 'admin'">
                 <span style="font-size: 150%" class="glyphicon glyphicon-plus"></span>
             </button>
         </h2>
@@ -24,7 +24,7 @@
             <td>{{ project.description }}</td>
         </tr>
         <tr ng-if="!projects.length">
-            <td colspan="2">
+            <td colspan="3">
                 <uib-alert type="warning" class="tm-20 rm-20 lm-20"><span class="glyphicon glyphicon-warning-sign"></span>
                     &nbsp;Sorry, no results were found.
                 </uib-alert>

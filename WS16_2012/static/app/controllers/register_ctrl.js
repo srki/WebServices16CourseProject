@@ -12,9 +12,6 @@
                     function (response) {
                         Auth.storeCredentials(response.data.role, response.data.id);
                         $location.path("/dashboard");
-                    },
-                    function () {
-                        $location.path("/login");
                     }
                 );
 
