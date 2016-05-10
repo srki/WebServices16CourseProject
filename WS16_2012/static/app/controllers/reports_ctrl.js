@@ -114,7 +114,7 @@
                     // The dynamics of creating tasks
                     Reports.getCreatedReport($scope.projectId).then(function (response) {
                         var datasets = [{
-                            label: "# of finished tasks",
+                            label: "# of created tasks",
                             data: response.data.data
                         }];
 
