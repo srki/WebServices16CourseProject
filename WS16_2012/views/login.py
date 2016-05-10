@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from WS16_2012.views.views import RestView
+from django.contrib.auth.models import Permission
 
 
 class LoginView(RestView):
@@ -52,6 +53,8 @@ class RegisterView(RestView):
             return JsonResponse({'message': 'An user with that username already exists!'}, status=400)
         except ObjectDoesNotExist:
             u = User.objects.create_user(username=json_values['username'], password=json_values['password'])
+            p = Permission.objects.get(codename='user')
+            u.user_permissions.add(p)
             u.save()
 
             return JsonResponse({}, status=200)
