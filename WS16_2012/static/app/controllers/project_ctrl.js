@@ -63,6 +63,10 @@
                 );
             };
 
+            $scope.showReports = function () {
+                $location.path('/projects/' + $scope.projectId + '/reports');
+            };
+
             $scope.cancel = function () {
                 $scope.edit = false;
                 $scope.alertMessage = null;

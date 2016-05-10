@@ -153,6 +153,10 @@
                 }
             };
 
+            $scope.backToProject = function () {
+                $location.path('/projects/' + $scope.projectId);
+            };
+
 
             init();
         });

@@ -1,5 +1,11 @@
 <div id="Reports" class="plr-50 ptb-20">
+    <div class="clickable" ng-click="backToProject()">
+        <span class="glyphicon glyphicon-backward bm-20"></span>
+        <span class="text-1_5x">Back to project</span>
+    </div>
+
     <h2>Reports</h2>
+
     <uib-alert type="danger" ng-if="alertMessage" class="tm-20">{{ alertMessage }}</uib-alert>
 
     <div>
