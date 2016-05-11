@@ -105,7 +105,7 @@ class TasksDoneView(View):
 
             for t in tasks:
 
-                dc = t.date_created.strftime("%Y/%m/%dT%H:00:00")
+                dc = t.date_finished.strftime("%Y/%m/%dT%H:00:00")
 
                 if len(x) != 0 and x[-1] == dc:
                     y[-1] += 1
@@ -135,7 +135,7 @@ class TasksDoneByUser(View):
 
             for t in tasks:
 
-                dc = t.date_created.strftime("%Y/%m/%dT%H:00:00")
+                dc = t.date_finished.strftime("%Y/%m/%dT%H:00:00")
 
                 if len(x) != 0 and x[-1] == dc:
                     y[-1] += 1
