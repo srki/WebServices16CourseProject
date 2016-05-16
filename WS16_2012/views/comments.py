@@ -1,16 +1,13 @@
 import json
 from datetime import datetime
-
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-
 from django.contrib.auth.decorators import permission_required
+from django.core.paginator import Paginator
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView, View, PrivilegeCheck
 from WS16_2012.models import Project, Comment
-
-from django.core.paginator import Paginator
+from WS16_2012.views.views import View, PrivilegeCheck
 
 
 class CommentsView(View):
@@ -42,7 +39,7 @@ class CommentsView(View):
 
                 data.append(c)
 
-            return JsonResponse({'comments': data, 'count': count}, status=200)
+            return JsonResponse({'items': data, 'count': count}, status=200)
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 

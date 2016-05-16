@@ -6,32 +6,17 @@
     "use strict";
 
     angular.module('app.ProjectTasksCtrl', [])
-        .controller('ProjectTasksCtrl', function ($scope, $location, $uibModal, Projects) {
-            var init = function () {
-                $scope.tasks = [];
-                $scope.count = 0;
-                $scope.currentPage = 1;
-                $scope.perPage = 10;
+        .controller('ProjectTasksCtrl', function ($scope, $location, $uibModal, $resource) {
+            var TasksResource = $resource('api/projects/' + $scope.projectId + '/tasks/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
-                $scope.loadTasks();
-            };
-
-            $scope.loadTasks = function () {
-                Projects.getAllTasks($scope.projectId, $scope.currentPage, $scope.perPage).then(
-                    function (response) {
-                        $scope.tasks = response.data.tasks;
-                        $scope.count = response.data.count;
-
-                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
-                        }
-
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = 'Error: ' + response.data.message;
-                    }
-                );
+            $scope.loadPage = function () {
+                TasksResource.query($scope.queryParams, function (data, headers) {
+                    $scope.tasks = data;
+                    $scope.count = headers().count;
+                    $scope.alertMessage = null;
+                });
             };
 
             $scope.createTask = function () {
@@ -45,7 +30,7 @@
                     scope: scope
                 }).result.then(function (refresh) {
                     if (refresh) {
-                        $scope.loadTasks();
+                        $scope.loadPage();
                     }
                 });
             };
@@ -54,18 +39,18 @@
                 $location.path('/projects/' + $scope.projectId + '/tasks/' + id);
             };
 
-            $scope.remove = function (id) {
-                Projects.removeTask($scope.projectId, id).then(
-                    function () {
-                        $scope.loadTasks();
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = 'Error: ' + response.data.message;
-                    }
-                );
+            $scope.remove = function (task) {
+                task.$delete($scope.loadPage);
             };
 
-            init();
+            (function () {
+                $scope.tasks = [];
+                $scope.count = 0;
+                $scope.queryParams = {
+                    page: 1,
+                    per_page: 10
+                };
+                $scope.loadPage();
+            }());
         });
 }(angular));

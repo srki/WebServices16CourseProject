@@ -1,21 +1,16 @@
 import json
-
 from datetime import datetime
-
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
+from django.db import transaction
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView, View, PrivilegeCheck
 from WS16_2012.models import Task, TaskRevision, Project
-
-from django.core.paginator import Paginator
-from django.contrib.auth.models import User
-
-from django.db import transaction
-from django.core.exceptions import ObjectDoesNotExist
+from WS16_2012.views.views import RestView, View, PrivilegeCheck
 
 
 class TasksView(RestView):
@@ -73,7 +68,7 @@ class TasksView(RestView):
 
             data.append(t)
 
-        return JsonResponse({'tasks': data, 'count': count}, status=200)
+        return JsonResponse({'items': data, 'count': count}, status=200)
 
 
 class ProjectTasksView(View):
@@ -111,7 +106,7 @@ class ProjectTasksView(View):
 
                 data.append(t)
 
-            return JsonResponse({'tasks': data, 'count': count}, status=200)
+            return JsonResponse({'items': data, 'count': count}, status=200)
         except Exception:
             return JsonResponse({'message': 'Bad request'}, status=400)
 
@@ -281,6 +276,6 @@ class ProjectTaskHistoryView(View):
 
                 data.append(temp)
 
-            return JsonResponse({'changes': data, 'count': count}, status=200)
+            return JsonResponse({'items': data, 'count': count}, status=200)
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)

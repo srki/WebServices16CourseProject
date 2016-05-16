@@ -6,70 +6,33 @@
     "use strict";
 
     angular.module('app.TaskCommentsCtrl', [])
-        .controller('TaskCommentsCtrl', function ($scope, Projects) {
-            var init = function () {
-                $scope.commentText = null;
-                $scope.comments = [];
-                $scope.editId = null;
-                $scope.count = 0;
-                $scope.currentPage = 1;
-                $scope.perPage = 5;
+        .controller('TaskCommentsCtrl', function ($scope, $resource) {
+            var CommentResource = $resource('api/projects/' + $scope.projectId + '/tasks/' + $scope.taskId + '/comments/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
-                $scope.loadComments();
+            $scope.loadPage = function () {
+                $scope.comment = new CommentResource();
+                CommentResource.query($scope.queryParams, function (data, headers) {
+                    $scope.comments = data;
+                    $scope.tasks = data;
+                    $scope.count = headers().count;
+                });
             };
 
-            $scope.loadComments = function () {
-                Projects.getAllComments($scope.projectId, $scope.taskId, $scope.currentPage, $scope.perPage).then(
-                    function (response) {
-                        $scope.comments = response.data.comments;
-                        $scope.count = response.data.count;
-
-                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
-                        }
-
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
-            };
-
-            $scope.setEdit = function (id, text) {
-                $scope.editId = id;
-                $scope.commentText = text;
+            $scope.edit = function (comment) {
+                $scope.comment = comment;
             };
 
             $scope.cancel = function () {
-                $scope.editId = null;
-                $scope.commentText = "";
+                $scope.comment = new CommentResource();
+                $scope.loadPage();
+                $scope.alertMessage = null;
             };
 
-            $scope.remove = function (id) {
-                Projects.removeComment($scope.projectId, $scope.taskId, id).then(
-                    function () {
-                        $scope.cancel();
-                        $scope.loadComments();
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
-            };
 
-            $scope.send = function () {
-                var success = function () {
-                        $scope.cancel();
-                        $scope.loadComments();
-                        $scope.alertMessage = null;
-                    },
-                    error = function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    };
-
-                if (!$scope.commentText) {
+            $scope.save = function () {
+                if (!$scope.comment) {
                     $scope.alertMessage = "You must enter comment text";
                 } else {
                     $scope.alertMessage = null;
@@ -79,13 +42,26 @@
                     return;
                 }
 
-                if (!$scope.editId) {
-                    Projects.createComment($scope.projectId, $scope.taskId, $scope.commentText).then(success, error);
+                if ($scope.comment.id) {
+                    $scope.comment.$update($scope.cancel);
                 } else {
-                    Projects.updateComment($scope.projectId, $scope.taskId, $scope.editId, $scope.commentText).then(success, error);
+                    $scope.comment.$save($scope.cancel);
                 }
             };
 
-            init();
+            $scope.remove = function (comment) {
+                comment.$delete($scope.loadPage);
+            };
+
+            (function () {
+                $scope.comments = [];
+                $scope.count = 0;
+                $scope.queryParams = {
+                    page: 1,
+                    per_page: 5
+                };
+
+                $scope.loadPage();
+            }());
         });
 }(angular));

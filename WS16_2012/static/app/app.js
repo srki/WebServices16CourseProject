@@ -1,7 +1,9 @@
 /*global angular*/
 (function (angular) {
     "use strict";
-    angular.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.constants', 'ngRoute', 'ngAnimate', 'ui.bootstrap', 'oi.select'])
+    angular.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.constants',
+            'ngRoute', 'ngAnimate', 'ngResource',
+            'ui.bootstrap', 'oi.select'])
         .config(function ($routeProvider, $locationProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
@@ -42,15 +44,18 @@
                 .otherwise('/');
             $locationProvider.html5Mode(true);
 
-            $httpProvider.interceptors.push('ResponseInterceptor');
+            $httpProvider.interceptors.push('ForbiddenResponseInterceptor');
+            $httpProvider.interceptors.push('PaginationResponseInterceptor');
         })
         .filter('capitalize', function () {
             return function (input) {
                 return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
             };
         })
-        .run(function ($rootScope) {
-            $rootScope.userId = null;
-            $rootScope.display = 'login';
+        .run(function (Auth) {
+            Auth.isLogged().then(function (response) {
+                Auth.storeCredentials(response.data.role, response.data.id);
+            });
+            Auth.storeCredentials('login', null);
         });
 }(angular));

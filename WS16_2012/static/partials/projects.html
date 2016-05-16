@@ -32,9 +32,9 @@
         </tr>
     </table>
 
-    <div ng-show="itemsCount" class="ta-mid">
-        <uib-pagination total-items="itemsCount" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        items-per-page="perPage" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
+    <div ng-show="count" class="ta-mid">
+        <uib-pagination total-items="count" ng-model="queryParams.page" max-size="5" items-per-page="queryParams.per_page"
+                        class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>
 
 </div>

@@ -1,15 +1,12 @@
 import json
-
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-
 from django.contrib.auth.decorators import permission_required
+from django.core.paginator import Paginator
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
-from WS16_2012.views.views import RestView, View, PrivilegeCheck
 from WS16_2012.models import Project
-
-from django.core.paginator import Paginator
+from WS16_2012.views.views import RestView, View, PrivilegeCheck
 
 
 class ProjectsView(RestView):
@@ -29,7 +26,7 @@ class ProjectsView(RestView):
             projects = paginator.page(page)
 
         data = [model_to_dict(instance, exclude=['participants']) for instance in projects]
-        return JsonResponse({'projects': data, 'count': count}, status=200)
+        return JsonResponse({'items': data, 'count': count}, status=200)
 
     @method_decorator(permission_required(perm='auth.admin', raise_exception=True))
     def rest_post(self, request, json_values):

@@ -6,59 +6,33 @@
     "use strict";
 
     angular.module('app.TaskCtrl', [])
-        .controller('TaskCtrl', function ($scope, $filter, $location, $routeParams, Auth, Projects, PRIORITIES, STATUSES) {
-            var setEditFields = function () {
-                    $scope.task.priority = $filter('lowercase')($scope.task.priority);
-                    $scope.task.status = $filter('lowercase')($scope.task.status);
-
-                    $scope.code = $scope.task.code;
-                    $scope.subject = $scope.task.subject;
-                    $scope.description = $scope.task.description;
-                    $scope.priority = $scope.task.priority;
-                    $scope.status = $scope.task.status;
-                    $scope.assignedTo = $scope.task.assigned;
-                },
-                init = function () {
-                    $scope.priorities = PRIORITIES;
-                    $scope.statuses = STATUSES;
-
-                    $scope.projectId = $routeParams.projectId;
-                    $scope.taskId = $routeParams.taskId;
-                    $scope.task = {};
-
-                    $scope.edit = false;
-                    $scope.code = "";
-                    $scope.subject = "";
-                    $scope.description = "";
-                    $scope.priority = "";
-                    $scope.status = "";
-                    $scope.assignedTo = "";
-
-                    Projects.getTaskById($scope.projectId, $scope.taskId).then(
-                        function (response) {
-                            $scope.task = response.data;
-                            setEditFields($scope.task);
-                        },
-                        function (response) {
-                            $scope.alertMessage = "Error: " + response.data.message;
-                        }
-                    );
-                };
+        .controller('TaskCtrl', function ($scope, $filter, $location, $routeParams, $resource, Projects, PRIORITIES, STATUSES) {
+            var TasksResource = $resource('api/projects/' + $routeParams.projectId + '/tasks/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
             $scope.getParticipants = function (pattern) {
                 return Projects.getParticipantsByPattern($scope.projectId, pattern, 5).then(function (response) {
-                    return response.data.users;
+                    return response.data;
+                });
+            };
+
+            $scope.loadTask = function () {
+                TasksResource.get({id: $routeParams.taskId}, function (data) {
+                    $scope.task = data;
+                    $scope.task.priority = $filter('lowercase')($scope.task.priority);
+                    $scope.task.status = $filter('lowercase')($scope.task.status);
                 });
             };
 
             $scope.update = function () {
-                if (!$scope.subject) {
+                if (!$scope.task.subject) {
                     $scope.alertMessage = "Subject cannot be empty";
-                } else if (!$scope.description) {
+                } else if (!$scope.task.description) {
                     $scope.alertMessage = "Description cannot be empty";
-                } else if (!$scope.priority) {
+                } else if (!$scope.task.priority) {
                     $scope.alertMessage = "You have to select priority.";
-                } else if (!$scope.status) {
+                } else if (!$scope.task.status) {
                     $scope.alertMessage = "You have to select status.";
                 } else {
                     $scope.alertMessage = null;
@@ -68,16 +42,13 @@
                     return;
                 }
 
-                Projects.updateTask($scope.projectId, $scope.taskId, $scope.subject, $scope.description,
-                    $scope.status, $scope.priority, $scope.assignedTo ? $scope.assignedTo.id : null).then(
-                    function (response) {
-                        $scope.task = response.data;
-                        $scope.cancel();
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
+                if ($scope.task.assigned) {
+                    $scope.task.assigned = $scope.task.assigned.id;
+                }
+                if ($scope.task.created) {
+                    $scope.task.created = $scope.task.created.id;
+                }
+                $scope.task.$update($scope.cancel);
             };
 
             $scope.backToProject = function () {
@@ -86,19 +57,27 @@
 
             $scope.revert = function (change) {
                 $scope.edit = true;
-                $scope.subject = change.subject;
-                $scope.description = change.description;
-                $scope.priority = $filter('lowercase')(change.priority);
-                $scope.status = $filter('lowercase')(change.status);
-                $scope.assignedTo = change.assigned;
+                $scope.task.subject = change.subject;
+                $scope.task.description = change.description;
+                $scope.task.priority = $filter('lowercase')(change.priority);
+                $scope.task.status = $filter('lowercase')(change.status);
+                $scope.task.assignedTo = change.assigned;
             };
 
             $scope.cancel = function () {
-                setEditFields();
                 $scope.edit = false;
+                $scope.loadTask();
                 $scope.alertMessage = null;
             };
 
-            init();
+            (function () {
+                $scope.PRIORITIES = PRIORITIES;
+                $scope.STATUSES = STATUSES;
+                $scope.projectId = $routeParams.projectId;
+                $scope.taskId = $routeParams.taskId;
+                $scope.edit = false;
+                $scope.task = {};
+                $scope.loadTask();
+            }());
         });
 }(angular));

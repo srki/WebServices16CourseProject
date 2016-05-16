@@ -28,7 +28,7 @@ class PrivilegeCheck:
         if user.has_perm('auth.admin'):
             return
 
-        if comment.created != user.id:
+        if comment.created != user.id and comment.created != user:
             raise Exception
 
 

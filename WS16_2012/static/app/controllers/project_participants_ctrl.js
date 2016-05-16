@@ -11,8 +11,10 @@
                 $scope.newParticipant = null;
                 $scope.participants = [];
                 $scope.count = 0;
-                $scope.currentPage = 1;
-                $scope.perPage = 10;
+                $scope.queryParams = {
+                    page: 1,
+                    per_page: 10
+                };
 
                 $scope.loadParticipants();
             };
@@ -26,8 +28,8 @@
             $scope.loadParticipants = function () {
                 Projects.getAllParticipants($scope.projectId, $scope.currentPage, $scope.perPage).then(
                     function (response) {
-                        $scope.participants = response.data.users;
-                        $scope.count = response.data.count;
+                        $scope.participants = response.data;
+                        $scope.count = response.headers().count;
 
                         if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
                             $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;

@@ -4,11 +4,11 @@
 
     <div class="row bm-20">
         <div class="col-md-6">
-            <oi-select oi-options="priority for priority in priorities track by priority" ng-model="selectedPriorities"
+            <oi-select oi-options="priority for priority in PRIORITIES track by priority" ng-model="queryParams.priority"
                        multiple multiple-placeholder="Select priorities" placeholder="Select priorities"></oi-select>
         </div>
         <div class="col-md-6">
-            <oi-select oi-options="status for status in statuses track by status" ng-model="selectedStatuses"
+            <oi-select oi-options="status for status in STATUSES track by status" ng-model="queryParams.status"
                        multiple multiple-placeholder="Select statuses" placeholder="Select statuses"></oi-select>
         </div>
     </div>
@@ -40,9 +40,7 @@
     </table>
 
     <div ng-show="count" class="ta-mid">
-        <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        items-per-page="perPage" force-ellipses="true" ng-change="loadTasks()"></uib-pagination>
+        <uib-pagination total-items="count" ng-model="queryParams.page" max-size="5" items-per-page="queryParams.per_page"
+                        class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>
-
-
 </div>

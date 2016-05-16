@@ -2,9 +2,10 @@
     <h3>Comments</h3>
 
     <div ng-show="count" class="ta-mid">
-        <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        force-ellipses="true" ng-change="loadComments()" items-per-page="perPage"></uib-pagination>
+        <uib-pagination total-items="count" ng-model="queryParams.page" max-size="5" items-per-page="queryParams.per_page"
+                        class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>
+
     <table class="table table-striped table-hover">
         <tr ng-repeat="comment in comments">
             <td ng-class="{'text-italic': editId == comment.id}">
@@ -13,9 +14,9 @@
                 <span class="lp-10">{{ comment.date | date:'medium' }}</span>
             </td>
             <td class="ta-mid" style="vertical-align: middle;" ng-show="display == 'admin' || comment.created.id == userId">
-                <span class="glyphicon glyphicon-edit clickable" ng-click="setEdit(comment.id, comment.text)"></span>
+                <span class="glyphicon glyphicon-edit clickable" ng-click="edit(comment)"></span>
                 &nbsp;
-                <span class="glyphicon glyphicon-trash clickable" ng-click="remove(comment.id)"></span>
+                <span class="glyphicon glyphicon-trash clickable" ng-click="remove(comment)"></span>
             </td>
             <td ng-hide="display == 'admin' || comment.created.id == userId">&nbsp;</td>
         </tr>
@@ -26,12 +27,12 @@
     </div>
 
     <div class="input-group input-container tm-5">
-        <textarea class="form-control" placeholder="Comment text" aria-describedby="comment-text" rows="3" ng-model="commentText">
+        <textarea class="form-control" placeholder="Comment text" aria-describedby="comment-text" rows="3" ng-model="comment.text">
         </textarea>
         <span class="input-group-btn lp-10">
-			<button class="btn btn-default" ng-click="send()" style="width: 75px">Send</button>
+			<button class="btn btn-default" ng-click="save()" style="width: 75px">Save</button>
             <br/>
-            <button ng-show="editId" class="btn btn-default" ng-click="cancel()" style="width: 75px">Cancel</button>
+            <button ng-show="comment.id" class="btn btn-default" ng-click="cancel()" style="width: 75px">Cancel</button>
 		</span>
     </div>
 </div>

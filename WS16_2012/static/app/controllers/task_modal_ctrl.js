@@ -6,26 +6,19 @@
     "use strict";
 
     angular.module('app.TaskModalCtrl', [])
-        .controller('TaskModalCtrl', function ($scope, $uibModalInstance, Projects, PRIORITIES, STATUSES) {
-            var init = function () {
-                $scope.priorities = PRIORITIES;
-                $scope.statuses = STATUSES;
-
-                $scope.subject = "";
-                $scope.description = "";
-                $scope.priority = null;
-                $scope.status = null;
-                $scope.assignedTo = null;
-            };
+        .controller('TaskModalCtrl', function ($scope, $uibModalInstance, $resource, Projects, PRIORITIES, STATUSES) {
+            var TasksResource = $resource('api/projects/' + $scope.projectId + '/tasks/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
             $scope.create = function () {
-                if (!$scope.subject) {
+                if (!$scope.task.subject) {
                     $scope.alertMessage = "Subject cannot be empty";
-                } else if (!$scope.description) {
+                } else if (!$scope.task.description) {
                     $scope.alertMessage = "Description cannot be empty";
-                } else if (!$scope.priority) {
+                } else if (!$scope.task.priority) {
                     $scope.alertMessage = "You have to select priority.";
-                } else if (!$scope.status) {
+                } else if (!$scope.task.status) {
                     $scope.alertMessage = "You have to select status.";
                 } else {
                     $scope.alertMessage = null;
@@ -35,21 +28,18 @@
                     return;
                 }
 
-                Projects.createTask($scope.projectId, $scope.subject, $scope.description, $scope.priority, $scope.status,
-                    $scope.assignedTo ? $scope.assignedTo.id : null).then(
-                    function () {
-                        $scope.alertMessage = null;
-                        $scope.close(true);
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
+                if ($scope.task.assigned) {
+                    $scope.task.assigned = $scope.task.assigned.id;
+                }
+
+                $scope.task.$save(function () {
+                    $scope.close(true);
+                });
             };
 
             $scope.getParticipants = function (pattern) {
                 return Projects.getParticipantsByPattern($scope.projectId, pattern, 5).then(function (response) {
-                    return response.data.users;
+                    return response.data;
                 });
             };
 
@@ -58,6 +48,10 @@
                 $uibModalInstance.close(refresh);
             };
 
-            init();
+            (function () {
+                $scope.PRIORITIES = PRIORITIES;
+                $scope.STATUSES = STATUSES;
+                $scope.task = new TasksResource();
+            }());
         });
 }(angular));

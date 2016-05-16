@@ -6,31 +6,16 @@
     "use strict";
 
     angular.module('app.ProjectsCtrl', [])
-        .controller('ProjectsCtrl', function ($scope, $location, $uibModal, Auth, Projects) {
-            var init = function () {
-                $scope.projects = [];
-                $scope.itemsCount = 0;
-                $scope.currentPage = 1;
-                $scope.perPage = 10;
-                $scope.loadPage();
-            };
+        .controller('ProjectsCtrl', function ($scope, $location, $uibModal, $resource) {
+            var ProjectsResource = $resource('api/projects/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
             $scope.loadPage = function () {
-                Projects.getAll($scope.currentPage).then(
-                    function (response) {
-                        $scope.projects = response.data.projects;
-                        $scope.itemsCount = response.data.count;
-
-                        if ($scope.currentPage > Math.ceil($scope.count / $scope.perPage)) {
-                            $scope.currentPage = Math.ceil($scope.count / $scope.perPage) || 1;
-                        }
-
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = 'Error: ' + response.data.message;
-                    }
-                );
+                ProjectsResource.query($scope.queryParams, function (data, headers) {
+                    $scope.projects = data;
+                    $scope.count = headers().count;
+                });
             };
 
             $scope.create = function () {
@@ -53,6 +38,14 @@
                 $location.path('/projects/' + id + '/reports');
             };
 
-            init();
+            (function () {
+                $scope.projects = [];
+                $scope.count = 0;
+                $scope.queryParams = {
+                    page: 1,
+                    per_page: 10
+                };
+                $scope.loadPage();
+            }());
         });
 }(angular));

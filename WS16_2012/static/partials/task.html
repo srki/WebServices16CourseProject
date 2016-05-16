@@ -48,33 +48,33 @@
         <div ng-show="edit">
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="subject-edit">Subject</span>
-                <input type="text" class="form-control" placeholder="subject" aria-describedby="name-subject" ng-model="subject"/>
+                <input type="text" class="form-control" placeholder="subject" aria-describedby="name-subject" ng-model="task.subject"/>
             </div>
 
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="description-edit">Description</span>
                 <textarea class="form-control" placeholder="Description" aria-describedby="description-edit" rows="5"
-                          ng-model="description">
+                          ng-model="task.description">
                 </textarea>
             </div>
 
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="description-edit">Priority</span>
-                <select class="form-control" ng-model="priority">
-                    <option ng-repeat="priority in priorities">{{ priority }}</option>
+                <select class="form-control" ng-model="task.priority">
+                    <option ng-repeat="priority in PRIORITIES">{{ priority }}</option>
                 </select>
             </div>
 
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="description-edit">Status</span>
-                <select class="form-control" ng-model="status">
-                    <option ng-repeat="status in statuses">{{ status }}</option>
+                <select class="form-control" ng-model="task.status">
+                    <option ng-repeat="status in STATUSES">{{ status }}</option>
                 </select>
             </div>
 
             <div class="input-group input-container tm-5">
                 <span class="input-group-addon input-description-135" id="description-assigned">Assigned to</span>
-                <input type="text" ng-model="assignedTo" placeholder="Type user name" typeahead-editable="false"
+                <input type="text" ng-model="task.assigned" placeholder="Type user name" typeahead-editable="false"
                        uib-typeahead="user as user.username for user in getParticipants($viewValue)"
                        class="form-control" aria-describedby="description-assigned" typeahead-min-length="0">
             </div>

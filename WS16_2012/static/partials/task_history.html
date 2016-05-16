@@ -8,8 +8,8 @@
     </div>
 
     <div ng-show="count" class="ta-mid">
-        <uib-pagination total-items="count" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true"
-                        force-ellipses="true" ng-change="loadHistory()" items-per-page="perPage"></uib-pagination>
+        <uib-pagination total-items="count" ng-model="queryParams.page" max-size="5" items-per-page="queryParams.per_page"
+                        class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="loadPage()"></uib-pagination>
     </div>
 
     <table class="table table-striped table-hover">

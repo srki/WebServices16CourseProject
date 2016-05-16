@@ -6,32 +6,21 @@
     "use strict";
 
     angular.module('app.ProjectCtrl', [])
-        .controller('ProjectCtrl', function ($scope, $routeParams, $location, Auth, Projects) {
-            var init = function () {
-                $scope.projectId = $routeParams.id;
-                $scope.project = {};
+        .controller('ProjectCtrl', function ($scope, $routeParams, $location, $resource) {
+            var ProjectsResource = $resource('api/projects/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
-                $scope.edit = false;
-                $scope.name = "";
-                $scope.description = "";
-
-                Projects.getById($scope.projectId).then(
-                    function (response) {
-                        $scope.project = response.data;
-                        $scope.name = $scope.project.name;
-                        $scope.description = $scope.project.description;
-                        $scope.alertMessage = null;
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
+            $scope.loadProject = function () {
+                ProjectsResource.get({id: $scope.projectId}, function (data) {
+                    $scope.project = data;
+                });
             };
 
             $scope.update = function () {
-                if (!$scope.name) {
+                if (!$scope.project.name) {
                     $scope.alertMessage = "Name cannot be empty.";
-                } else if (!$scope.description) {
+                } else if (!$scope.project.description) {
                     $scope.alertMessage = "Description cannot be empty.";
                 } else {
                     $scope.alertMessage = null;
@@ -41,17 +30,9 @@
                     return;
                 }
 
-                Projects.update($scope.projectId, $scope.name, $scope.description).then(
-                    function (response) {
-                        $scope.edit = false;
-                        $scope.project = response.data;
-                        $scope.name = $scope.project.name;
-                        $scope.description = $scope.project.description;
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
+                $scope.project.$update($scope.cancel, function (response) {
+                    $scope.alertMessage = response.data.message;
+                });
             };
 
             $scope.showReports = function () {
@@ -60,9 +41,15 @@
 
             $scope.cancel = function () {
                 $scope.edit = false;
+                $scope.loadProject();
                 $scope.alertMessage = null;
             };
 
-            init();
+            (function () {
+                $scope.projectId = $routeParams.id;
+                $scope.project = {};
+                $scope.edit = false;
+                $scope.loadProject();
+            }());
         });
 }(angular));

@@ -6,8 +6,8 @@
 (function (angular) {
     "use strict";
 
-    angular.module('app.ResponseInterceptor', [])
-        .factory('ResponseInterceptor', function responseObserver($q, $location) {
+    angular.module('app.ForbiddenResponseInterceptor', [])
+        .factory('ForbiddenResponseInterceptor', function responseObserver($q, $location) {
             return {
                 'responseError': function (errorResponse) {
                     if (errorResponse.status === 403) {
@@ -16,7 +16,7 @@
                             $location.search('redirectTo', path);
                         }
 
-                        $location.path('/logout');
+                        $location.path('/login');
                     }
 
                     return $q.reject(errorResponse);

@@ -6,17 +6,15 @@
     "use strict";
 
     angular.module('app.ProjectModalCtrl', [])
-        .controller('ProjectModalCtrl', function ($scope, $uibModalInstance, Projects) {
-            var init = function () {
-                $scope.alertMessage = null;
-                $scope.name = "";
-                $scope.description = "";
-            };
+        .controller('ProjectModalCtrl', function ($scope, $uibModalInstance, $resource) {
+            var ProjectsResource = $resource('api/projects/:id',
+                {id: '@id'},
+                {update: {method: 'PUT'}});
 
             $scope.create = function () {
-                if (!$scope.name) {
+                if (!$scope.project.name) {
                     $scope.alertMessage = "Name cannot be empty.";
-                } else if (!$scope.description) {
+                } else if (!$scope.project.description) {
                     $scope.alertMessage = "Description cannot be empty.";
                 } else {
                     $scope.alertMessage = null;
@@ -26,15 +24,9 @@
                     return;
                 }
 
-                Projects.create($scope.name, $scope.description).then(
-                    function () {
-                        $scope.alertMessage = null;
-                        $scope.close(true);
-                    },
-                    function (response) {
-                        $scope.alertMessage = "Error: " + response.data.message;
-                    }
-                );
+                $scope.project.$save(function () {
+                    $scope.close(true);
+                });
             };
 
             $scope.close = function (refresh) {
@@ -42,6 +34,8 @@
                 $uibModalInstance.close(refresh);
             };
 
-            init();
+            (function () {
+                $scope.project = new ProjectsResource();
+            }());
         });
 }(angular));
