@@ -10,15 +10,6 @@
     angular.module('app.ReportsCtrl', [])
         .controller('ReportsCtrl', function ($scope, $location, $routeParams, Auth, Reports, Projects, REPORT_TYPES) {
             var init = function () {
-                Auth.isLogged().then(
-                    function (response) {
-                        Auth.storeCredentials(response.data.role, response.data.id);
-                    },
-                    function () {
-                        $location.path("/login");
-                    }
-                );
-
                 $scope.types = REPORT_TYPES;
                 $scope.type = $scope.types[0];
                 $scope.projectId = $routeParams.projectId;
@@ -26,7 +17,6 @@
                 $scope.selectUser = false;
                 $scope.alertMessage = null;
                 $scope.chart = null;
-
 
                 $scope.$watch('type', function () {
                     if ($scope.type === $scope.types[0] || $scope.type === $scope.types[1] ||
@@ -41,6 +31,8 @@
                         $scope.alertMessage = "Selected report type does not exist.";
                     }
                 });
+
+                $scope.update();
             };
 
             $scope.getParticipants = function (pattern) {

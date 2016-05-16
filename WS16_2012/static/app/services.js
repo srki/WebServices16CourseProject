@@ -4,6 +4,7 @@ angular.module('app.services', [
     'app.Projects',
     'app.Tasks',
     'app.Users',
-    'app.Reports'
+    'app.Reports',
+    'app.ResponseInterceptor'
 ]);
 

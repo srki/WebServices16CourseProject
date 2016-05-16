@@ -8,15 +8,6 @@
     angular.module('app.ProjectsCtrl', [])
         .controller('ProjectsCtrl', function ($scope, $location, $uibModal, Auth, Projects) {
             var init = function () {
-                Auth.isLogged().then(
-                    function (response) {
-                        Auth.storeCredentials(response.data.role, response.data.id);
-                    },
-                    function () {
-                        $location.path('/login');
-                    }
-                );
-
                 $scope.projects = [];
                 $scope.itemsCount = 0;
                 $scope.currentPage = 1;

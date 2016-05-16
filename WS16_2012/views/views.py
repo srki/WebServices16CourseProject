@@ -1,6 +1,8 @@
 import json
-from django.views.generic import View
+from django.contrib.auth import logout
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
+from django.views.generic import View
 
 
 class PrivilegeCheck:
@@ -34,6 +36,9 @@ class RestView(View):
     def get(self, request):
         try:
             return self.rest_get(request)
+        except PermissionDenied as e:
+            logout(request)
+            return JsonResponse({}, status=403)
         except Exception as e:
             return JsonResponse({'message': 'Bad request'}, status=400)
 

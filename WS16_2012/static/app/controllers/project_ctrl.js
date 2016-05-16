@@ -8,15 +8,6 @@
     angular.module('app.ProjectCtrl', [])
         .controller('ProjectCtrl', function ($scope, $routeParams, $location, Auth, Projects) {
             var init = function () {
-                Auth.isLogged().then(
-                    function (response) {
-                        Auth.storeCredentials(response.data.role, response.data.id);
-                    },
-                    function () {
-                        $location.path("/login");
-                    }
-                );
-
                 $scope.projectId = $routeParams.id;
                 $scope.project = {};
 

@@ -7,12 +7,11 @@
 
     angular.module('app.LoginCtrl', [])
         .controller('LoginCtrl', function ($scope, $location, Auth) {
-
             var init = function () {
                 Auth.isLogged().then(
                     function (response) {
                         Auth.storeCredentials(response.data.role, response.data.id);
-                        $location.path('/dashboard');
+                        $location.path($scope.redirectTo);
                     },
                     function () {
                         $location.path("/login");
@@ -22,6 +21,7 @@
                 $scope.username = "";
                 $scope.password = "";
                 $scope.alertMessage = null;
+                $scope.redirectTo = $location.search().redirectTo || '/dashboard';
             };
 
             $scope.login = function () {
@@ -41,7 +41,7 @@
                     function (response) {
                         Auth.storeCredentials(response.data.role, response.data.id);
                         $scope.alertMessage = null;
-                        $location.path('/dashboard');
+                        $location.path($scope.redirectTo);
                     },
                     function (response) {
                         $scope.alertMessage = "Error: " + response.data.message;

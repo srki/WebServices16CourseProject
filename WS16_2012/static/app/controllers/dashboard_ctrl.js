@@ -8,15 +8,6 @@
     angular.module('app.DashboardCtrl', [])
         .controller('DashboardCtrl', function ($scope, $location, Auth, Tasks, PRIORITIES, STATUSES) {
             var init = function () {
-                Auth.isLogged().then(
-                    function (response) {
-                        Auth.storeCredentials(response.data.role, response.data.id);
-                    },
-                    function () {
-                        $location.path("/login");
-                    }
-                );
-
                 $scope.priorities = PRIORITIES;
                 $scope.statuses = STATUSES;
                 $scope.selectedPriorities = [];

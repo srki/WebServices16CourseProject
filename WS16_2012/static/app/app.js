@@ -2,7 +2,7 @@
 (function (angular) {
     "use strict";
     angular.module('app', ['app.controllers', 'app.services', 'app.directives', 'app.constants', 'ngRoute', 'ngAnimate', 'ui.bootstrap', 'oi.select'])
-        .config(function ($routeProvider, $locationProvider) {
+        .config(function ($routeProvider, $locationProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
                     redirectTo: '/login'
@@ -41,6 +41,8 @@
                 })
                 .otherwise('/');
             $locationProvider.html5Mode(true);
+
+            $httpProvider.interceptors.push('ResponseInterceptor');
         })
         .filter('capitalize', function () {
             return function (input) {
