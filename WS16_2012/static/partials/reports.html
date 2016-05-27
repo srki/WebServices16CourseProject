@@ -14,7 +14,7 @@
     </div>
 
     <div ng-show="selectUser">
-        <h3>Select user type: </h3>
+        <h3>Select user: </h3>
 
         <input type="text" style="width: 300px" ng-model="user" placeholder="Type user name" typeahead-editable="false"
                uib-typeahead="user as user.username for user in getParticipants($viewValue)" typeahead-loading="loadingParticipants"

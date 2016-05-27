@@ -37,7 +37,7 @@
 
             $scope.getParticipants = function (pattern) {
                 return Projects.getParticipantsByPattern($scope.projectId, pattern, 5).then(function (response) {
-                    return response.data.users;
+                    return response.data;
                 });
             };
 
