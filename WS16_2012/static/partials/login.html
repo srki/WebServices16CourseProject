@@ -1,6 +1,6 @@
 <div id="Login">
     <div class="panel-body">
-        <div class="ta-mid plr-50">
+        <form ng-submit="login()" class="ta-mid plr-50">
             <h3>Log in with an existing account</h3>
             <uib-alert type="danger" ng-if="alertMessage">{{alertMessage}}</uib-alert>
             <div class="input-group input-group-lg tm-10">
@@ -14,8 +14,8 @@
                 <input name="password" id="password_input" type="password" class="form-control" ng-model="password"
                        placeholder="password" aria-describedby="passowrd_lbl">
             </div>
-            <button id="LoginButton" type="button" class="btn btn-success btn-lg tm-10" ng-click="login()">Login</button>
-        </div>
+            <button id="LoginButton" type="submit" class="btn btn-success btn-lg tm-10">Login</button>
+        </form>
 
         <div class="bm-20 ta-mid">
             <h3>or can create a new one.</h3>
